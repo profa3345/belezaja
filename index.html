@@ -78,30 +78,30 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Palette — mais rico e com contraste real */
-      --ink:       #111009;
-      --ink2:      #28231C;
-      --ink3:      #3D362C;
-      --gold:      #A8792E;
-      --gold-lt:   #C99B50;
-      --gold-pale: #E8C87A;
+      /* Palette — contraste máximo, elegante */
+      --ink:       #0E0C09;
+      --ink2:      #1E1A13;
+      --ink3:      #332D23;
+      --gold:      #9A6D1F;
+      --gold-lt:   #BF8E3A;
+      --gold-pale: #D4AA60;
       --gold-bg:   #FBF6EE;
-      --gold-ring: rgba(168,121,46,.18);
-      --cream:     #FAF8F5;
-      --cream2:    #F2EEE8;
-      --stone:     #E4DDD4;
-      --stone2:    #CFC7BB;
-      --muted:     #6E6555;
-      --muted2:    #4E4739;
-      --green:     #2E7D32;
-      --green-bg:  #2E7D3212;
-      --green-bd:  #2E7D3230;
-      --red:       #B84230;
-      --red-bg:    #B8423010;
-      --blue:      #2A6FA8;
-      --warn:      #7A5A10;
-      --warn-bg:   #FBF0DC;
-      --warn-bd:   #D4A830;
+      --gold-ring: rgba(154,109,31,.2);
+      --cream:     #F8F5F0;
+      --cream2:    #EEE9E1;
+      --stone:     #DDD5CA;
+      --stone2:    #C4BAB0;
+      --muted:     #5A5044;   /* ↑ era 6E6555 — mais escuro, mais legível */
+      --muted2:    #3A342A;   /* ↑ era 4E4739 */
+      --green:     #1E6B22;
+      --green-bg:  #1E6B2212;
+      --green-bd:  #1E6B2235;
+      --red:       #A83220;
+      --red-bg:    #A8322010;
+      --blue:      #1A5F96;
+      --warn:      #6B4C08;
+      --warn-bg:   #FAF0D8;
+      --warn-bd:   #C49820;
 
       --radius-xs: 6px;
       --radius-sm: 10px;
@@ -109,25 +109,25 @@
       --radius-lg: 18px;
       --radius-xl: 24px;
 
-      --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
-      --shadow-sm: 0 1px 6px rgba(0,0,0,0.07), 0 2px 12px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 20px rgba(0,0,0,0.09), 0 1px 6px rgba(0,0,0,0.05);
-      --shadow-lg: 0 12px 48px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.07);
-      --shadow-xl: 0 24px 80px rgba(0,0,0,0.16), 0 8px 24px rgba(0,0,0,0.08);
+      --shadow-xs: 0 1px 4px rgba(0,0,0,0.08);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 6px 24px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-lg: 0 16px 56px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-xl: 0 28px 88px rgba(0,0,0,0.18), 0 8px 28px rgba(0,0,0,0.10);
 
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-sans:  'DM Sans', system-ui, sans-serif;
       --font-mono:  'DM Mono', 'Courier New', monospace;
 
-      /* Escala tipográfica consistente */
-      --t-xs:   0.72rem;   /* 11.5px */
-      --t-sm:   0.82rem;   /* 13.1px */
-      --t-base: 0.94rem;   /* 15px   */
-      --t-md:   1.05rem;   /* 16.8px */
-      --t-lg:   1.2rem;    /* 19.2px */
-      --t-xl:   1.5rem;    /* 24px   */
-      --t-2xl:  2rem;      /* 32px   */
-      --t-3xl:  2.8rem;    /* 44.8px */
+      /* Escala tipográfica — tamanhos mínimos maiores */
+      --t-xs:   0.75rem;   /* 12px  — labels mínimos */
+      --t-sm:   0.875rem;  /* 14px  — corpo secundário */
+      --t-base: 1rem;      /* 16px  — corpo principal */
+      --t-md:   1.125rem;  /* 18px  — subtítulos */
+      --t-lg:   1.375rem;  /* 22px  — títulos de seção */
+      --t-xl:   1.75rem;   /* 28px  — títulos grandes */
+      --t-2xl:  2.25rem;   /* 36px  — display */
+      --t-3xl:  3rem;      /* 48px  — hero */
     }
 
     html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
@@ -139,26 +139,26 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      line-height: 1.65;
+      line-height: 1.7;
+      font-size: var(--t-base);
     }
 
     /* ── Animations ──────────────────────────────────────────────────────────── */
-    @keyframes fadeUp   { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes slideR   { from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:translateX(0)} }
-    @keyframes slideL   { from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes slideR   { from{opacity:0;transform:translateX(32px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes slideL   { from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)} }
     @keyframes spin     { to{transform:rotate(360deg)} }
-    @keyframes pulse    { 0%,100%{opacity:1} 50%{opacity:.35} }
-    @keyframes popIn    { 0%{transform:scale(.72);opacity:0} 55%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
-    @keyframes toastIn  { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:translateX(0)} }
-    @keyframes shimmer  { 0%{background-position:-500px 0} 100%{background-position:500px 0} }
-    @keyframes glow     { 0%,100%{box-shadow:0 0 0 0 var(--gold-ring)} 50%{box-shadow:0 0 0 6px var(--gold-ring)} }
+    @keyframes pulse    { 0%,100%{opacity:1} 50%{opacity:.3} }
+    @keyframes popIn    { 0%{transform:scale(.7);opacity:0} 55%{transform:scale(1.06)} 100%{transform:scale(1);opacity:1} }
+    @keyframes toastIn  { from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes shimmer  { 0%{background-position:-600px 0} 100%{background-position:600px 0} }
 
-    .fade-up    { animation: fadeUp .42s cubic-bezier(.22,1,.36,1) both; }
-    .slide-in   { animation: slideR .34s cubic-bezier(.22,1,.36,1) both; }
-    .slide-back { animation: slideL .34s cubic-bezier(.22,1,.36,1) both; }
+    .fade-up    { animation: fadeUp .44s cubic-bezier(.22,1,.36,1) both; }
+    .slide-in   { animation: slideR .36s cubic-bezier(.22,1,.36,1) both; }
+    .slide-back { animation: slideL .36s cubic-bezier(.22,1,.36,1) both; }
     .skeleton   {
       background: linear-gradient(90deg,var(--stone) 25%,var(--cream2) 50%,var(--stone) 75%);
-      background-size:500px 100%;
+      background-size:600px 100%;
       animation: shimmer 1.6s infinite;
       border-radius: var(--radius-xs);
     }
@@ -166,7 +166,7 @@
     /* ── Input / Button primitives ──────────────────────────────────────────── */
     .inp {
       width: 100%;
-      padding: 13px 16px;
+      padding: 14px 16px;
       border: 1.5px solid var(--stone2);
       border-radius: var(--radius-sm);
       background: #fff;
@@ -176,6 +176,7 @@
       outline: none;
       line-height: 1.5;
       transition: border-color .18s, box-shadow .18s, transform .14s;
+      font-weight: 400;
     }
     .inp::placeholder { color: var(--stone2); font-size: var(--t-sm); }
     .inp:focus {
@@ -186,21 +187,21 @@
     .inp.err  { border-color: var(--red);   box-shadow: 0 0 0 3px var(--red-bg); }
     .inp.ok   { border-color: var(--green); }
     select.inp   { cursor: pointer; }
-    textarea.inp { resize: vertical; min-height: 88px; }
+    textarea.inp { resize: vertical; min-height: 96px; }
 
     /* Fix mobile auto-zoom */
-    @media(max-width:640px) { .inp { font-size: 16px; min-height: 52px; } }
+    @media(max-width:640px) { .inp { font-size: 16px; min-height: 54px; } }
 
-    /* Field label */
+    /* Field label — LEGÍVEL */
     .field-label {
       display: block;
       font-family: var(--font-sans);
       font-size: var(--t-xs);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--muted2);
-      letter-spacing: .6px;
+      letter-spacing: .8px;
       text-transform: uppercase;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
     }
 
     /* Buttons */
@@ -209,34 +210,37 @@
       outline: none;
       cursor: pointer;
       font-family: var(--font-sans);
+      font-size: var(--t-sm);
+      font-weight: 500;
       transition: all .2s cubic-bezier(.22,1,.36,1);
     }
-    .btn:hover:not(:disabled)  { filter: brightness(1.07); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn:hover:not(:disabled)  { filter: brightness(1.06); transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-xs); filter: brightness(.97); }
-    .btn:disabled              { opacity: .48; cursor: not-allowed; }
+    .btn:disabled              { opacity: .45; cursor: not-allowed; }
 
-    /* Primary / Ghost variants */
     .btn-primary {
       background: var(--ink);
-      color: #F5F2ED;
-      letter-spacing: 1.8px;
-      font-weight: 600;
+      color: #F2EDE4;
+      letter-spacing: 2px;
+      font-weight: 700;
+      font-size: var(--t-xs);
     }
     .btn-gold {
       background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
       color: #fff;
-      letter-spacing: 1.8px;
-      font-weight: 600;
-      box-shadow: 0 2px 12px rgba(168,121,46,.28);
+      letter-spacing: 2px;
+      font-weight: 700;
+      font-size: var(--t-xs);
+      box-shadow: 0 4px 16px rgba(154,109,31,.32);
     }
     .btn-ghost {
       background: #fff;
       color: var(--muted2);
       border: 1.5px solid var(--stone2);
-      font-weight: 500;
+      font-weight: 600;
+      font-size: var(--t-sm);
     }
 
-    /* Card hover */
     .hov { transition: all .24s cubic-bezier(.22,1,.36,1); cursor: pointer; }
     .hov:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg) !important; }
 
@@ -264,7 +268,6 @@
     .check-box:hover { border-color: var(--gold); transform: scale(1.08); }
     .check-box.on    { background: var(--gold); border-color: var(--gold); animation: popIn .22s ease; }
 
-    /* Progress / score */
     .score-bar  { height: 7px; border-radius: 4px; background: var(--stone2); overflow: hidden; }
     .score-fill { height: 100%; border-radius: 4px; transition: width .7s cubic-bezier(.22,1,.36,1); }
 
@@ -272,8 +275,8 @@
     .step-pill {
       font-family: var(--font-sans);
       font-size: var(--t-xs);
-      font-weight: 500;
-      padding: 6px 12px;
+      font-weight: 600;
+      padding: 7px 12px;
       border-radius: 20px;
       transition: all .22s;
       user-select: none;
@@ -284,23 +287,19 @@
     .pass-wrap { position: relative; }
     .pass-eye  {
       position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      cursor: pointer; font-size: .9rem; color: var(--muted); user-select: none;
+      cursor: pointer; font-size: 1rem; color: var(--muted); user-select: none;
       transition: transform .15s, color .15s;
     }
     .pass-eye:hover { transform: translateY(-50%) scale(1.18); color: var(--gold); }
 
     /* Spinner */
     .spinner {
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,.3);
+      width: 17px; height: 17px;
+      border: 2.5px solid rgba(255,255,255,.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin .55s linear infinite;
-      display: inline-block; vertical-align: middle; margin-right: 7px;
-    }
-    .spinner-dark {
-      border-color: rgba(0,0,0,.12);
-      border-top-color: var(--gold);
+      display: inline-block; vertical-align: middle; margin-right: 8px;
     }
     .sec-dot { animation: pulse 2.2s ease infinite; }
 
@@ -308,29 +307,22 @@
     .upload-bar  { height: 4px; background: var(--stone); border-radius: 2px; overflow: hidden; margin-top: 8px; }
     .upload-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width .28s; }
 
-    /* Divider */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--stone);
-      margin: 24px 0;
-    }
-
     /* Badge */
     .badge {
       font-family: var(--font-sans);
-      font-size: .6rem;
+      font-size: var(--t-xs);
       font-weight: 700;
       letter-spacing: 1.2px;
       text-transform: uppercase;
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 20px;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
-    .badge-gold   { background: var(--gold-bg); color: var(--gold); border: 1px solid #D4A83040; }
-    .badge-green  { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
-    .badge-stone  { background: var(--cream2); color: var(--muted2); border: 1px solid var(--stone); }
+    .badge-gold  { background: var(--gold-bg); color: var(--gold);  border: 1px solid #C49820; }
+    .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+    .badge-stone { background: var(--cream2); color: var(--muted2); border: 1px solid var(--stone); }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 5px; }
@@ -343,47 +335,31 @@
     .row-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 18px;
     }
-    @media(max-width:560px) {
-      .row-2 { grid-template-columns: 1fr; }
-    }
+    @media(max-width:560px) { .row-2 { grid-template-columns: 1fr; } }
 
     /* Step pills — responsive */
     @media(max-width:540px) {
       .step-label-full  { display: none !important; }
       .step-label-short { display: inline !important; }
-      .step-pill        { font-size: .6rem; padding: 5px 7px; }
+      .step-pill        { font-size: .65rem; padding: 5px 7px; }
     }
 
     /* Login modal */
-    @media(max-width:420px) {
-      .login-modal-inner { padding: 24px 18px !important; }
-    }
+    @media(max-width:420px) { .login-modal-inner { padding: 24px 18px !important; } }
 
     /* Touch targets */
-    @media(max-width:640px) {
-      button, [role="button"] { min-height: 46px; }
-    }
+    @media(max-width:640px) { button, [role="button"] { min-height: 48px; } }
 
     /* ── Navbar ─────────────────────────────────────────────────────────────── */
     .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(250,248,245,.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(248,245,240,.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--stone);
-      box-shadow: var(--shadow-xs);
-    }
-
-    /* ── Form card ───────────────────────────────────────────────────────────── */
-    .form-card {
-      background: #fff;
-      border: 1px solid var(--stone);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 1px 0 rgba(0,0,0,.04), var(--shadow-xs);
     }
 
     /* ── Section header ──────────────────────────────────────────────────────── */
@@ -395,46 +371,58 @@
       color: var(--ink);
     }
 
+    /* ── Required marker ────────────────────────────────────────────────────── */
+    .req { color: var(--gold); margin-left: 2px; }
+
+    /* ── Info boxes ─────────────────────────────────────────────────────────── */
+    .info-box      { background: var(--gold-bg); border: 1px solid #D4A83040; border-radius: 10px; padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; }
+    .info-box-blue { background: #EEF5FC; border-color: #BDD5EE; }
+    .info-box-warn { background: var(--warn-bg); border-color: var(--warn-bd); }
+
     /* ── Loading screen ─────────────────────────────────────────────────────── */
     #app-loading {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      background: var(--cream); z-index: 9999; gap: 16px;
+      background: var(--cream); z-index: 9999; gap: 18px;
       transition: opacity .45s;
     }
     #app-loading.hidden { opacity: 0; pointer-events: none; }
-    #app-loading .logo  { font-family: var(--font-serif); font-size: 2.2rem; color: var(--ink); letter-spacing: -1px; }
+    #app-loading .logo  { font-family: var(--font-serif); font-size: 2.4rem; color: var(--ink); letter-spacing: -1px; }
     #app-loading .logo em { color: var(--gold); font-style: italic; }
-    #app-loading .hint  { font-family: var(--font-sans); font-size: var(--t-xs); color: var(--muted); letter-spacing: 4px; }
+    #app-loading .hint  { font-family: var(--font-sans); font-size: var(--t-xs); color: var(--muted); letter-spacing: 4px; font-weight: 600; }
     #app-loading .ring  {
-      width: 38px; height: 38px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       border: 2.5px solid var(--stone); border-top-color: var(--gold);
       animation: spin .7s linear infinite;
     }
 
-    /* ── Required marker ────────────────────────────────────────────────────── */
-    .req { color: var(--gold); margin-left: 2px; }
-
-    /* ── Info box ───────────────────────────────────────────────────────────── */
-    .info-box {
-      background: var(--gold-bg);
-      border: 1px solid #D4A83035;
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
+    /* ── Service card — premium ─────────────────────────────────────────────── */
+    .service-card {
       display: flex;
-      gap: 10px;
+      gap: 16px;
       align-items: flex-start;
+      padding: 20px;
+      background: #fff;
+      border-radius: 14px;
+      border: 1.5px solid var(--stone);
+      transition: all .22s cubic-bezier(.22,1,.36,1);
+      box-shadow: var(--shadow-xs);
     }
-    .info-box-blue {
-      background: #EEF5FC;
-      border-color: #BDD5EE;
+    .service-card:hover { border-color: var(--stone2); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+
+    /* ── Price chip ─────────────────────────────────────────────────────────── */
+    .price-chip {
+      font-family: var(--font-sans);
+      font-size: var(--t-sm);
+      font-weight: 700;
+      color: var(--gold);
+      background: var(--gold-bg);
+      border: 1px solid #D4A83030;
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-block;
     }
-    .info-box-warn {
-      background: var(--warn-bg);
-      border-color: var(--warn-bd);
-    }
-  </style>
 </head>
 
 <body>
@@ -1082,15 +1070,35 @@
       const pendingSuggestions=suggestedServices.filter(s=>!existingNames.includes(s));
 
       return(
-        <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:16,padding:"24px",marginBottom:20,boxShadow:"var(--shadow-sm)"}}>
-          <SectionHeader title="Serviços" icon="✂️" count={services.length} onAdd={()=>{resetForm();setAdding(true);setTimeout(()=>formRef.current?.scrollIntoView({behavior:"smooth",block:"start"}),60);}} />
+        <div style={{background:"#fff",border:"1.5px solid var(--stone)",borderRadius:18,padding:"28px",marginBottom:20,boxShadow:"var(--shadow-sm)"}}>
+          {/* Header */}
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,paddingBottom:18,borderBottom:"1px solid var(--stone)"}}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:42,height:42,borderRadius:12,background:"linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.2rem",boxShadow:"var(--shadow-sm)"}}>✂️</div>
+              <div>
+                <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-lg)",fontWeight:400,color:"var(--ink)",lineHeight:1}}>Serviços</div>
+                {services.length>0&&<div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:2,fontWeight:500}}>{services.length} cadastrado{services.length>1?"s":""}</div>}
+              </div>
+            </div>
+            <button onClick={()=>{resetForm();setAdding(true);setTimeout(()=>formRef.current?.scrollIntoView({behavior:"smooth",block:"start"}),60);}}
+              className="btn btn-primary"
+              style={{padding:"10px 20px",borderRadius:10,display:"flex",alignItems:"center",gap:8}}>
+              <span style={{fontSize:"1rem",fontWeight:300}}>+</span> ADICIONAR
+            </button>
+          </div>
 
+          {/* CNAE suggestions */}
           {pendingSuggestions.length>0&&(
-            <div style={{background:"var(--gold-bg)",border:"1px solid #DFC070",borderRadius:10,padding:"14px 16px",marginBottom:16}}>
-              <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"#6A500A",letterSpacing:"1.5px",marginBottom:10,fontWeight:600}}>💡 SUGERIDOS PELO CNAE</div>
-              <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+            <div style={{background:"linear-gradient(135deg,var(--gold-bg) 0%,#FFF8E8 100%)",border:"1px solid #D4A83030",borderRadius:12,padding:"16px 18px",marginBottom:18}}>
+              <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--warn)",letterSpacing:"1.5px",marginBottom:12,fontWeight:700,display:"flex",alignItems:"center",gap:8}}>
+                <span>💡</span> SUGERIDOS PELO SEU CNAE
+              </div>
+              <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
                 {pendingSuggestions.map(s=>(
-                  <button key={s} onClick={()=>addSuggested(s)} className="btn" style={{padding:"6px 14px",borderRadius:20,border:"1px solid var(--gold)",background:"#fff",fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",fontWeight:500}}>
+                  <button key={s} onClick={()=>addSuggested(s)} className="btn"
+                    style={{padding:"7px 16px",borderRadius:20,border:"1.5px solid var(--gold)",background:"#fff",
+                    fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted2)",fontWeight:600,
+                    boxShadow:"var(--shadow-xs)"}}>
                     + {s}
                   </button>
                 ))}
@@ -1099,130 +1107,235 @@
           )}
 
           {/* Lista de serviços */}
-          {services.length===0&&!adding&&<EmptyState icon="✂️" text="Nenhum serviço cadastrado" sub="Clique em + Adicionar para incluir seus serviços" />}
-          <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:adding?20:0}}>
+          {services.length===0&&!adding&&(
+            <div style={{textAlign:"center",padding:"48px 24px",background:"var(--cream)",borderRadius:14,border:"2px dashed var(--stone)",marginBottom:4}}>
+              <div style={{fontSize:"2.4rem",marginBottom:12}}>✂️</div>
+              <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-lg)",color:"var(--ink2)",marginBottom:6}}>Nenhum serviço cadastrado</div>
+              <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)"}}>Clique em <strong>+ ADICIONAR</strong> para incluir seus serviços com fotos e preços</div>
+            </div>
+          )}
+
+          <div style={{display:"flex",flexDirection:"column",gap:12,marginBottom:adding?24:0}}>
             {services.map(s=>(
-              <div key={s.id} style={{display:"flex",gap:14,alignItems:"flex-start",padding:"16px",background:"var(--cream)",borderRadius:12,border:"1px solid var(--stone)"}}>
-                {/* Thumb da primeira foto */}
+              <div key={s.id} className="service-card">
+                {/* Foto thumbnail */}
                 {s.photos&&s.photos.length>0?(
-                  <div style={{width:56,height:56,borderRadius:8,overflow:"hidden",flexShrink:0,border:"1px solid var(--stone2)"}}>
+                  <div style={{position:"relative",width:72,height:72,borderRadius:10,overflow:"hidden",flexShrink:0,boxShadow:"var(--shadow-xs)"}}>
                     <img src={s.photos[0].preview} alt={s.name} style={{width:"100%",height:"100%",objectFit:"cover"}} />
+                    {s.photos.length>1&&(
+                      <div style={{position:"absolute",bottom:4,right:4,background:"rgba(14,12,9,.7)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 5px",borderRadius:4,fontWeight:600}}>+{s.photos.length-1}</div>
+                    )}
                   </div>
                 ):(
-                  <div style={{width:56,height:56,borderRadius:8,background:"var(--stone)",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.4rem"}}>✂️</div>
-                )}
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".94rem",fontWeight:600,color:"var(--ink)",marginBottom:3}}>{s.name}</div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",marginBottom:2}}>
-                    {s.category&&<span>{s.category} · </span>}{s.duration}min
+                  <div style={{width:72,height:72,borderRadius:10,background:"var(--cream2)",border:"1.5px dashed var(--stone2)",flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:3}}>
+                    <span style={{fontSize:"1.4rem"}}>✂️</span>
+                    <span style={{fontFamily:"var(--font-sans)",fontSize:".55rem",color:"var(--stone2)",fontWeight:500}}>SEM FOTO</span>
                   </div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",fontWeight:600,color:"var(--gold)"}}>{fmtServicePrice(s)}</div>
-                  {s.photos&&s.photos.length>1&&(
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginTop:4}}>{s.photos.length} fotos</div>
-                  )}
+                )}
+
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-base)",fontWeight:700,color:"var(--ink)",marginBottom:4,lineHeight:1.3}}>{s.name}</div>
+                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",marginBottom:8,display:"flex",alignItems:"center",gap:6}}>
+                    {s.category&&<span style={{fontWeight:500}}>{s.category}</span>}
+                    {s.category&&<span style={{color:"var(--stone2)"}}>·</span>}
+                    <span>{s.duration} min</span>
+                  </div>
+                  <span className="price-chip">{fmtServicePrice(s)}</span>
+                  {s.description&&<div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:8,lineHeight:1.5,overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{s.description}</div>}
                 </div>
-                <div style={{display:"flex",gap:6,flexShrink:0}}>
-                  <button onClick={()=>edit(s)} className="btn" style={{padding:"7px 14px",borderRadius:6,border:"1px solid var(--stone2)",background:"#fff",fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted2)",fontWeight:500}}>Editar</button>
-                  <button onClick={()=>remove(s.id)} className="btn" style={{padding:"7px 14px",borderRadius:6,border:"1px solid #E8C0B0",background:"#FFF5F3",fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--red)",fontWeight:500}}>Remover</button>
+
+                <div style={{display:"flex",flexDirection:"column",gap:6,flexShrink:0}}>
+                  <button onClick={()=>edit(s)} className="btn btn-ghost" style={{padding:"7px 14px",borderRadius:8,fontSize:"var(--t-xs)"}}>Editar</button>
+                  <button onClick={()=>remove(s.id)} className="btn" style={{padding:"7px 14px",borderRadius:8,border:"1.5px solid #E8C0B0",background:"#FFF8F6",fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--red)",fontWeight:600}}>Remover</button>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Formulário de adição/edição */}
+          {/* Formulário */}
           {adding&&(
-            <div ref={formRef} className="fade-up" style={{background:"var(--cream)",border:"1px solid var(--stone2)",borderRadius:16,padding:"24px",marginTop:8}}>
-              <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",letterSpacing:"2.5px",color:"var(--muted)",marginBottom:20,fontWeight:600}}>{editId?"✏️ EDITAR SERVIÇO":"✨ NOVO SERVIÇO"}</div>
+            <div ref={formRef} className="fade-up" style={{background:"var(--cream)",border:"1.5px solid var(--stone)",borderRadius:16,padding:"28px",marginTop:8}}>
+
+              {/* Form header */}
+              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:24,paddingBottom:16,borderBottom:"1px solid var(--stone)"}}>
+                <div style={{width:32,height:32,borderRadius:8,background:editId?"var(--gold-bg)":"var(--ink)",border:editId?"1px solid #D4A83030":"none",display:"flex",alignItems:"center",justifyContent:"center",fontSize:".9rem"}}>
+                  {editId?"✏️":"✨"}
+                </div>
+                <div>
+                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",letterSpacing:"2px",color:"var(--muted)",fontWeight:700}}>{editId?"EDITANDO SERVIÇO":"NOVO SERVIÇO"}</div>
+                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted2)",marginTop:1}}>Preencha as informações abaixo</div>
+                </div>
+              </div>
 
               {/* Nome e categoria */}
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
-                <Field label="Nome do Serviço *">
-                  <input className="inp" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Ex: Corte Feminino" />
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:18}}>
+                <Field label="Nome do Serviço" required>
+                  <input className="inp" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Ex: Corte Feminino" autoFocus />
                 </Field>
                 <Field label="Categoria">
                   <select className="inp" value={form.category} onChange={e=>setForm(p=>({...p,category:e.target.value}))}>
-                    <option value="">Selecione</option>
+                    <option value="">Selecione...</option>
                     {SERVICE_CATEGORIES.map(c=><option key={c}>{c}</option>)}
                   </select>
                 </Field>
               </div>
 
               {/* Duração */}
-              <div style={{marginBottom:14}}>
+              <div style={{marginBottom:18}}>
                 <Field label="Duração (minutos)">
-                  <input className="inp" type="number" min="5" step="5" value={form.duration} onChange={e=>setForm(p=>({...p,duration:e.target.value}))} inputMode="numeric" style={{maxWidth:180}} />
+                  <div style={{display:"flex",alignItems:"center",gap:12}}>
+                    <input className="inp" type="number" min="5" max="480" step="5" value={form.duration}
+                      onChange={e=>setForm(p=>({...p,duration:e.target.value}))} inputMode="numeric"
+                      style={{maxWidth:140}} />
+                    <span style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",whiteSpace:"nowrap"}}>
+                      {Math.floor(form.duration/60)>0?`${Math.floor(form.duration/60)}h `:""}
+                      {form.duration%60>0?`${form.duration%60}min`:""}
+                    </span>
+                  </div>
                 </Field>
               </div>
 
-              {/* Tipo de preço */}
-              <div style={{marginBottom:14}}>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",fontWeight:600,color:"var(--ink2)",marginBottom:10}}>Preço *</div>
-                <div style={{display:"flex",gap:8,marginBottom:14}}>
-                  {[{val:"fixed",label:"Preço fixo"},{val:"range",label:"Faixa de preço (mín / máx)"}].map(opt=>(
+              {/* Preço — obrigatório */}
+              <div style={{background:"#fff",border:"1.5px solid var(--stone)",borderRadius:12,padding:"20px",marginBottom:18}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
+                  <span style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",fontWeight:700,color:"var(--ink)"}}>Preço</span>
+                  <span className="req" style={{fontSize:"var(--t-sm)"}}>*</span>
+                  <span style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginLeft:4}}>obrigatório</span>
+                </div>
+                <div style={{display:"flex",gap:8,marginBottom:16}}>
+                  {[{val:"fixed",label:"💰 Preço fixo"},{val:"range",label:"📊 Faixa de preço"}].map(opt=>(
                     <button key={opt.val} onClick={()=>setForm(p=>({...p,priceType:opt.val}))} className="btn"
-                      style={{padding:"8px 18px",borderRadius:20,border:`1.5px solid ${form.priceType===opt.val?"var(--gold)":"var(--stone2)"}`,
-                      background:form.priceType===opt.val?"var(--gold-bg)":"#fff",
-                      fontFamily:"var(--font-sans)",fontSize:".82rem",
-                      color:form.priceType===opt.val?"var(--muted2)":"var(--muted)",fontWeight:form.priceType===opt.val?600:400}}>
+                      style={{flex:1,padding:"10px 16px",borderRadius:10,
+                        border:`2px solid ${form.priceType===opt.val?"var(--gold)":"var(--stone2)"}`,
+                        background:form.priceType===opt.val?"var(--gold-bg)":"#fff",
+                        fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",
+                        color:form.priceType===opt.val?"var(--gold)":"var(--muted)",
+                        fontWeight:form.priceType===opt.val?700:500,
+                        boxShadow:form.priceType===opt.val?"var(--shadow-xs)":"none"}}>
                       {opt.label}
                     </button>
                   ))}
                 </div>
                 {form.priceType==="fixed"?(
-                  <Field label="Valor (R$) *">
-                    <input className="inp" type="text" value={form.price} onChange={e=>setForm(p=>({...p,price:fmtPrice(e.target.value)}))} placeholder="0,00" inputMode="decimal" style={{maxWidth:220}} />
+                  <Field label="Valor (R$)">
+                    <div style={{position:"relative"}}>
+                      <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:"var(--t-base)",color:"var(--muted)",fontWeight:600}}>R$</span>
+                      <input className="inp" type="text" value={form.price}
+                        onChange={e=>setForm(p=>({...p,price:fmtPrice(e.target.value)}))}
+                        placeholder="0,00" inputMode="decimal"
+                        style={{paddingLeft:44,maxWidth:240,fontWeight:600,fontSize:"var(--t-md)"}} />
+                    </div>
                   </Field>
                 ):(
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
-                    <Field label="Mínimo (R$) *">
-                      <input className="inp" type="text" value={form.priceMin} onChange={e=>setForm(p=>({...p,priceMin:fmtPrice(e.target.value)}))} placeholder="0,00" inputMode="decimal" />
+                    <Field label="Mínimo (R$)">
+                      <div style={{position:"relative"}}>
+                        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",fontWeight:600}}>R$</span>
+                        <input className="inp" type="text" value={form.priceMin}
+                          onChange={e=>setForm(p=>({...p,priceMin:fmtPrice(e.target.value)}))}
+                          placeholder="0,00" inputMode="decimal" style={{paddingLeft:44,fontWeight:600}} />
+                      </div>
                     </Field>
-                    <Field label="Máximo (R$) *">
-                      <input className="inp" type="text" value={form.priceMax} onChange={e=>setForm(p=>({...p,priceMax:fmtPrice(e.target.value)}))} placeholder="0,00" inputMode="decimal" />
+                    <Field label="Máximo (R$)">
+                      <div style={{position:"relative"}}>
+                        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",fontWeight:600}}>R$</span>
+                        <input className="inp" type="text" value={form.priceMax}
+                          onChange={e=>setForm(p=>({...p,priceMax:fmtPrice(e.target.value)}))}
+                          placeholder="0,00" inputMode="decimal" style={{paddingLeft:44,fontWeight:600}} />
+                      </div>
                     </Field>
                   </div>
                 )}
               </div>
 
               {/* Descrição */}
-              <div style={{marginBottom:16}}>
-                <Field label="Descrição (opcional)">
-                  <textarea className="inp" rows={2} value={form.description} onChange={e=>setForm(p=>({...p,description:e.target.value}))} placeholder="Detalhes sobre o serviço, técnica usada, inclui..." />
+              <div style={{marginBottom:20}}>
+                <Field label="Descrição">
+                  <textarea className="inp" rows={2} value={form.description}
+                    onChange={e=>setForm(p=>({...p,description:e.target.value}))}
+                    placeholder="Detalhes sobre o serviço — técnica, o que está incluso, duração média..." />
                 </Field>
               </div>
 
-              {/* Fotos do serviço */}
-              <div style={{marginBottom:20}}>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",fontWeight:600,color:"var(--ink2)",marginBottom:10}}>
-                  Fotos do Serviço <span style={{fontWeight:400,color:"var(--muted)"}}>— até 5 fotos</span>
-                </div>
-                <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
-                  {(form.photos||[]).map((ph,phIdx)=>(
-                    <div key={ph.id} style={{position:"relative",width:80,height:80,borderRadius:8,overflow:"hidden",border:`2px solid ${phIdx===0?"var(--gold)":"var(--stone2)"}`,flexShrink:0}}>
-                      <img src={ph.preview} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}} />
-                      {phIdx===0&&<div style={{position:"absolute",top:3,left:3,background:"var(--gold)",color:"#fff",fontSize:".5rem",padding:"1px 5px",borderRadius:4,fontFamily:"var(--font-sans)",letterSpacing:"1px",fontWeight:600}}>CAPA</div>}
-                      <div style={{position:"absolute",bottom:0,left:0,right:0,display:"flex",background:"rgba(24,20,15,.7)",padding:"2px"}}>
-                        <button onClick={()=>movePhoto(ph.id,-1)} disabled={phIdx===0} style={{flex:1,background:"transparent",border:"none",color:"#fff",cursor:"pointer",fontSize:".75rem",opacity:phIdx===0?.3:1,lineHeight:1,padding:"2px"}}>‹</button>
-                        <button onClick={()=>removePhoto(ph.id)} style={{flex:1,background:"transparent",border:"none",color:"#F4A08A",cursor:"pointer",fontSize:".75rem",lineHeight:1,padding:"2px"}}>✕</button>
-                        <button onClick={()=>movePhoto(ph.id,1)} disabled={phIdx===(form.photos||[]).length-1} style={{flex:1,background:"transparent",border:"none",color:"#fff",cursor:"pointer",fontSize:".75rem",opacity:phIdx===(form.photos||[]).length-1?.3:1,lineHeight:1,padding:"2px"}}>›</button>
-                      </div>
-                    </div>
-                  ))}
+              {/* Fotos */}
+              <div style={{background:"#fff",border:"1.5px solid var(--stone)",borderRadius:12,padding:"20px",marginBottom:24}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+                  <div>
+                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",fontWeight:700,color:"var(--ink)"}}>Fotos do serviço</div>
+                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:2}}>Até 5 fotos · JPG, PNG ou WebP · máx 5MB cada</div>
+                  </div>
                   {(form.photos||[]).length<5&&(
-                    <div onClick={()=>photoRef.current.click()} style={{width:80,height:80,borderRadius:8,border:"2px dashed var(--stone2)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",cursor:"pointer",gap:4,transition:"all .2s",background:"#fff"}}
-                      onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--gold)";e.currentTarget.style.background="var(--gold-bg)";}}
-                      onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--stone2)";e.currentTarget.style.background="#fff";}}>
-                      <span style={{fontSize:"1.2rem"}}>📷</span>
-                      <span style={{fontFamily:"var(--font-sans)",fontSize:".58rem",color:"var(--muted)",textAlign:"center"}}>Adicionar</span>
-                    </div>
+                    <button onClick={()=>photoRef.current.click()} className="btn btn-ghost"
+                      style={{padding:"8px 16px",borderRadius:8,fontSize:"var(--t-xs)"}}>
+                      📷 Adicionar
+                    </button>
                   )}
                 </div>
+
+                {(form.photos||[]).length===0?(
+                  <div onClick={()=>photoRef.current.click()}
+                    style={{border:"2px dashed var(--stone2)",borderRadius:10,padding:"32px",textAlign:"center",cursor:"pointer",transition:"all .2s"}}
+                    onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--gold)";e.currentTarget.style.background="var(--gold-bg)";}}
+                    onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--stone2)";e.currentTarget.style.background="transparent";}}>
+                    <div style={{fontSize:"2rem",marginBottom:8}}>📷</div>
+                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted2)",fontWeight:500}}>Arraste ou clique para adicionar fotos</div>
+                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:4}}>A primeira foto será exibida como capa do serviço</div>
+                  </div>
+                ):(
+                  <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(90px,1fr))",gap:10}}>
+                    {(form.photos||[]).map((ph,phIdx)=>(
+                      <div key={ph.id} style={{position:"relative",aspectRatio:"1",borderRadius:10,overflow:"hidden",
+                        border:`2px solid ${phIdx===0?"var(--gold)":"var(--stone)"}`,
+                        boxShadow:phIdx===0?"0 0 0 3px var(--gold-ring)":"none"}}>
+                        <img src={ph.preview} alt="" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} />
+                        {phIdx===0&&(
+                          <div style={{position:"absolute",top:5,left:5,background:"var(--gold)",color:"#fff",
+                            fontFamily:"var(--font-sans)",fontSize:".55rem",padding:"2px 7px",borderRadius:4,
+                            fontWeight:700,letterSpacing:"1px"}}>CAPA</div>
+                        )}
+                        <div style={{position:"absolute",inset:0,background:"rgba(14,12,9,0)",display:"flex",alignItems:"flex-end",justifyContent:"center",
+                          transition:"background .2s",padding:"6px",gap:4}}
+                          onMouseEnter={e=>e.currentTarget.style.background="rgba(14,12,9,.55)"}
+                          onMouseLeave={e=>e.currentTarget.style.background="rgba(14,12,9,0)"}>
+                          <button onClick={()=>movePhoto(ph.id,-1)} disabled={phIdx===0}
+                            style={{width:24,height:24,borderRadius:6,background:"rgba(255,255,255,.9)",border:"none",cursor:"pointer",
+                            fontSize:".85rem",display:"flex",alignItems:"center",justifyContent:"center",opacity:phIdx===0?.3:1,fontWeight:700}}>‹</button>
+                          <button onClick={()=>removePhoto(ph.id)}
+                            style={{width:24,height:24,borderRadius:6,background:"rgba(168,50,32,.9)",border:"none",cursor:"pointer",
+                            fontSize:".75rem",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700}}>✕</button>
+                          <button onClick={()=>movePhoto(ph.id,1)} disabled={phIdx===(form.photos||[]).length-1}
+                            style={{width:24,height:24,borderRadius:6,background:"rgba(255,255,255,.9)",border:"none",cursor:"pointer",
+                            fontSize:".85rem",display:"flex",alignItems:"center",justifyContent:"center",opacity:phIdx===(form.photos||[]).length-1?.3:1,fontWeight:700}}>›</button>
+                        </div>
+                      </div>
+                    ))}
+                    {(form.photos||[]).length<5&&(
+                      <div onClick={()=>photoRef.current.click()}
+                        style={{aspectRatio:"1",borderRadius:10,border:"2px dashed var(--stone2)",
+                        display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+                        cursor:"pointer",gap:4,transition:"all .2s"}}
+                        onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--gold)";e.currentTarget.style.background="var(--gold-bg)";}}
+                        onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--stone2)";e.currentTarget.style.background="transparent";}}>
+                        <span style={{fontSize:"1.3rem"}}>+</span>
+                        <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",fontWeight:500}}>foto</span>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <input ref={photoRef} type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={handlePhotos} style={{display:"none"}} />
               </div>
 
-              <div style={{display:"flex",gap:10}}>
-                <button onClick={resetForm} className="btn" style={{flex:1,padding:"12px",borderRadius:8,border:"1px solid var(--stone2)",background:"#fff",fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",fontWeight:500}}>Cancelar</button>
-                <button onClick={save} className="btn" style={{flex:2,padding:"12px",borderRadius:8,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"1.5px",fontWeight:600}}>SALVAR SERVIÇO</button>
+              {/* Actions */}
+              <div style={{display:"flex",gap:12}}>
+                <button onClick={resetForm} className="btn btn-ghost"
+                  style={{flex:1,padding:"14px",borderRadius:10,fontSize:"var(--t-sm)"}}>
+                  Cancelar
+                </button>
+                <button onClick={save} className="btn btn-primary"
+                  style={{flex:2,padding:"14px",borderRadius:10,fontSize:"var(--t-xs)",letterSpacing:"2px",
+                  display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+                  <span>✓</span> SALVAR SERVIÇO
+                </button>
               </div>
             </div>
           )}
@@ -2337,55 +2450,78 @@
           {/* ══ LANDING ══════════════════════════════════════════════════════ */}
           {screen==="landing"&&(
             <div className="fade-up">
-              <div style={{background:"linear-gradient(160deg,#1A1715 0%,#2C2420 60%,#1A1715 100%)",padding:"72px 24px",textAlign:"center",position:"relative",overflow:"hidden"}}>
-                <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 15% 50%,rgba(201,169,110,.12) 0%,transparent 50%),radial-gradient(circle at 85% 20%,rgba(201,169,110,.08) 0%,transparent 40%)"}} />
-                <div style={{position:"relative"}}>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"5px",color:"var(--gold)"}}>PLATAFORMA VERIFICADA · FIREBASE POWERED</span>
-                  <h1 style={{fontFamily:"var(--font-serif)",fontSize:"clamp(2.2rem,5vw,3.8rem)",color:"#F7F5F0",fontWeight:300,lineHeight:1.1,margin:"20px 0 16px"}}>
-                    Cadastre seu negócio<br/><em style={{color:"var(--gold)"}}>com segurança total</em>
+              {/* ── Hero ── */}
+              <div style={{background:"linear-gradient(150deg,#111009 0%,#1E1A14 55%,#28200E 100%)",padding:"88px 24px 80px",textAlign:"center",position:"relative",overflow:"hidden"}}>
+                {/* Decorative orbs */}
+                <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(ellipse 60% 50% at 10% 60%,rgba(168,121,46,.14) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 90% 15%,rgba(168,121,46,.09) 0%,transparent 60%),radial-gradient(ellipse 30% 30% at 50% 90%,rgba(168,121,46,.06) 0%,transparent 60%)"}} />
+                {/* Gold line accent */}
+                <div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:120,height:3,background:"linear-gradient(90deg,transparent,var(--gold),transparent)"}} />
+                <div style={{position:"relative",maxWidth:680,margin:"0 auto"}}>
+                  <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(168,121,46,.12)",border:"1px solid rgba(168,121,46,.25)",borderRadius:20,padding:"6px 16px",marginBottom:28}}>
+                    <span style={{width:6,height:6,borderRadius:"50%",background:"var(--gold)",display:"inline-block",animation:"pulse 2s infinite"}} />
+                    <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"3px",color:"var(--gold-lt)"}}>PLATAFORMA VERIFICADA · CADASTRO GRATUITO</span>
+                  </div>
+                  <h1 style={{fontFamily:"var(--font-serif)",fontSize:"clamp(2.4rem,5.5vw,4.2rem)",color:"#F5F2ED",fontWeight:300,lineHeight:1.08,margin:"0 0 20px",letterSpacing:"-0.5px"}}>
+                    Cadastre seu salão<br/><em style={{color:"var(--gold-lt)",fontStyle:"italic"}}>com segurança total</em>
                   </h1>
-                  <p style={{fontFamily:"var(--font-sans)",color:"#9A8F85",fontSize:".9rem",maxWidth:520,margin:"0 auto 40px",lineHeight:1.7}}>
-                    Dados salvos em tempo real no Firebase. CNPJ verificado na Receita Federal. Acesso de qualquer dispositivo.
+                  <p style={{fontFamily:"var(--font-sans)",color:"rgba(255,255,255,.52)",fontSize:".95rem",maxWidth:480,margin:"0 auto 40px",lineHeight:1.75}}>
+                    Dados salvos em tempo real, CNPJ verificado na Receita Federal e visibilidade para novos clientes.
                   </p>
-                  <button className="btn" onClick={()=>setScreen("type")} style={{background:"var(--gold)",color:"#fff",padding:"14px 40px",borderRadius:8,fontFamily:"var(--font-sans)",fontSize:".85rem",letterSpacing:"2px",fontWeight:500}}>
-                    COMEÇAR CADASTRO
-                  </button>
+                  <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
+                    <button className="btn btn-gold" onClick={()=>setScreen("type")} style={{padding:"15px 44px",borderRadius:10,fontSize:".85rem"}}>
+                      COMEÇAR GRATUITAMENTE
+                    </button>
+                    <button className="btn btn-ghost" onClick={()=>setScreen("search")} style={{padding:"15px 32px",borderRadius:10,fontSize:".85rem",background:"rgba(255,255,255,.07)",color:"rgba(255,255,255,.7)",border:"1px solid rgba(255,255,255,.15)"}}>
+                      Ver salões →
+                    </button>
+                  </div>
                 </div>
               </div>
-              {/* Feature grid */}
-              <div style={{background:"#fff",padding:"40px 24px",borderBottom:"1px solid var(--stone)"}}>
-                <div style={{maxWidth:800,margin:"0 auto"}}>
-                  <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",textAlign:"center",marginBottom:24}}>TECNOLOGIA · PRODUÇÃO REAL</p>
-                  <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:16}}>
+
+              {/* ── Feature strip ── */}
+              <div style={{background:"#fff",padding:"48px 24px",borderBottom:"1px solid var(--stone)"}}>
+                <div style={{maxWidth:860,margin:"0 auto"}}>
+                  <div style={{textAlign:"center",marginBottom:36}}>
+                    <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:8}}>POR QUE BELEZA JÁ</p>
+                    <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-xl)",fontWeight:300,color:"var(--ink)"}}>Tudo que você precisa em um só lugar</h2>
+                  </div>
+                  <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:14}}>
                     {[
-                      {icon:"🏛️",title:"CNPJ Real",         desc:"API Receita Federal pública + pré-preenchimento"},
-                      {icon:"☁️", title:"Firebase Storage",   desc:"Documentos salvos com segurança na nuvem"},
-                      {icon:"🔐",title:"Firebase Auth",      desc:"Login seguro por e-mail"},
-                      {icon:"📊",title:"Progresso Real",     desc:"Barra baseada em campos preenchidos"},
-                      {icon:"📍",title:"CEP Automático",     desc:"ViaCEP preenche o endereço"},
-                      {icon:"🛡️",title:"OTP Seguro",         desc:"Código gerado e validado com expiração"},
-                      {icon:"🤖",title:"CNAE → Serviços",   desc:"Sugestões automáticas pelo ramo de atividade"},
-                      {icon:"🔒",title:"Antifraude",         desc:"Validação CNPJ + CPF + docs + backend rules"},
+                      {icon:"🏛️",title:"CNPJ Verificado",   desc:"Consulta em tempo real na Receita Federal"},
+                      {icon:"☁️", title:"Nuvem Segura",      desc:"Documentos no Firebase Storage criptografado"},
+                      {icon:"🔐",title:"Acesso Protegido",  desc:"Firebase Auth com verificação por e-mail"},
+                      {icon:"📍",title:"CEP Automático",    desc:"Endereço preenchido via ViaCEP"},
+                      {icon:"✂️", title:"Catálogo de Serviços",desc:"Cadastre serviços com fotos e preços"},
+                      {icon:"🤖",title:"CNAE Inteligente",  desc:"Sugestões automáticas pelo ramo de atividade"},
+                      {icon:"🛡️",title:"Antifraude",        desc:"Validação multicamada de documentos"},
+                      {icon:"📊",title:"Progresso Real",    desc:"Barra baseada em campos efetivamente preenchidos"},
                     ].map((b,i)=>(
-                      <div key={b.title} className="hov fade-up" style={{textAlign:"center",padding:"20px 12px",background:"var(--cream)",borderRadius:12,border:"1px solid var(--stone)",animationDelay:`${i*.07}s`}}>
-                        <div style={{fontSize:"1.8rem",marginBottom:8}}>{b.icon}</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",fontWeight:600,marginBottom:4}}>{b.title}</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",lineHeight:1.4}}>{b.desc}</div>
+                      <div key={b.title} className="hov fade-up" style={{textAlign:"center",padding:"22px 14px",background:"var(--cream)",borderRadius:14,border:"1px solid var(--stone)",animationDelay:`${i*.06}s`}}>
+                        <div style={{width:44,height:44,borderRadius:12,background:"var(--gold-bg)",border:"1px solid #D4A83020",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.3rem",margin:"0 auto 12px"}}>{b.icon}</div>
+                        <div style={{fontFamily:"var(--font-sans)",fontSize:".78rem",fontWeight:600,color:"var(--ink)",marginBottom:5}}>{b.title}</div>
+                        <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",lineHeight:1.5}}>{b.desc}</div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-              {/* Plan cards */}
-              <div style={{maxWidth:800,margin:"0 auto",padding:"48px 24px"}}>
-                <h2 style={{fontFamily:"var(--font-serif)",fontSize:"2rem",fontWeight:300,textAlign:"center",marginBottom:32}}>O que você pode cadastrar</h2>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:20}}>
+
+              {/* ── Plan cards ── */}
+              <div style={{maxWidth:860,margin:"0 auto",padding:"56px 24px"}}>
+                <div style={{textAlign:"center",marginBottom:40}}>
+                  <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:8}}>COMECE HOJE</p>
+                  <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,color:"var(--ink)"}}>Qual é o seu perfil?</h2>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:20}}>
                   {PLAN_TYPES.map((t,i)=>(
-                    <div key={t.id} className="hov fade-up" onClick={()=>{setAccountType(t.id);setScreen("type");}} style={{background:"#fff",borderRadius:14,padding:"28px 24px",border:"1px solid var(--stone)",boxShadow:"var(--shadow-sm)",borderTop:`3px solid ${t.color}`,animationDelay:`${i*.1}s`}}>
-                      <div style={{fontSize:"2rem",marginBottom:12}}>{t.icon}</div>
-                      <h3 style={{fontFamily:"var(--font-serif)",fontSize:"1.2rem",fontWeight:400,marginBottom:8}}>{t.label}</h3>
-                      <p style={{fontFamily:"var(--font-sans)",fontSize:".75rem",color:"var(--muted2)",lineHeight:1.6}}>{t.desc}</p>
-                      <div style={{marginTop:16,fontFamily:"var(--font-sans)",fontSize:".7rem",color:t.color,letterSpacing:"1px"}}>SELECIONAR →</div>
+                    <div key={t.id} className="hov fade-up" onClick={()=>{setAccountType(t.id);setScreen("type");}}
+                      style={{background:"#fff",borderRadius:18,padding:"32px 24px",border:"1px solid var(--stone)",boxShadow:"var(--shadow-sm)",borderTop:`3px solid ${t.color}`,animationDelay:`${i*.1}s`,cursor:"pointer"}}>
+                      <div style={{width:52,height:52,borderRadius:14,background:`${t.color}18`,border:`1px solid ${t.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.6rem",marginBottom:16}}>{t.icon}</div>
+                      <h3 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-lg)",fontWeight:400,marginBottom:8,color:"var(--ink)"}}>{t.label}</h3>
+                      <p style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",lineHeight:1.65,marginBottom:20}}>{t.desc}</p>
+                      <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:t.color,fontWeight:600,letterSpacing:"1.5px",display:"flex",alignItems:"center",gap:6}}>
+                        COMEÇAR <span>→</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -2395,33 +2531,41 @@
 
           {/* ══ TYPE SELECTION ════════════════════════════════════════════════ */}
           {screen==="type"&&(
-            <div className="slide-in" style={{maxWidth:720,margin:"0 auto",padding:"48px 24px"}}>
-              <h2 style={{fontFamily:"var(--font-serif)",fontSize:"2.2rem",fontWeight:300,marginBottom:8,textAlign:"center"}}>Qual é o seu tipo de negócio?</h2>
-              <p style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted)",textAlign:"center",marginBottom:40}}>Isso define quais seções você vai preencher</p>
-              <div style={{display:"flex",flexDirection:"column",gap:16,marginBottom:32}}>
+            <div className="slide-in" style={{maxWidth:680,margin:"0 auto",padding:"56px 24px"}}>
+              <div style={{textAlign:"center",marginBottom:44}}>
+                <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:10}}>PASSO 1 DE 1</p>
+                <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,color:"var(--ink)",marginBottom:10}}>Qual é o seu tipo de negócio?</h2>
+                <p style={{fontFamily:"var(--font-sans)",fontSize:".88rem",color:"var(--muted)",lineHeight:1.6}}>Isso define as seções do formulário de cadastro</p>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:14,marginBottom:36}}>
                 {PLAN_TYPES.map(t=>(
-                  <div key={t.id} onClick={()=>setAccountType(t.id)} style={{
-                    background:"#fff",borderRadius:14,padding:"24px",
-                    border:`2px solid ${accountType===t.id?t.color:"#DDD8CE"}`,
-                    cursor:"pointer",transition:"all .22s",
-                    boxShadow:accountType===t.id?`0 0 0 4px ${t.color}18`:"none",
-                    display:"flex",alignItems:"center",gap:20,
-                    transform:accountType===t.id?"translateY(-1px)":"none",
-                  }}>
-                    <div style={{width:52,height:52,borderRadius:12,background:`${t.color}15`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.6rem",flexShrink:0}}>{t.icon}</div>
+                  <div key={t.id} onClick={()=>setAccountType(t.id)}
+                    style={{background:"#fff",borderRadius:14,padding:"22px 24px",
+                      border:`2px solid ${accountType===t.id?t.color:"var(--stone)"}`,
+                      cursor:"pointer",transition:"all .22s",
+                      boxShadow:accountType===t.id?`0 0 0 4px ${t.color}14, var(--shadow-sm)`:"var(--shadow-xs)",
+                      display:"flex",alignItems:"center",gap:20,
+                      transform:accountType===t.id?"translateY(-2px)":"none",
+                    }}>
+                    <div style={{width:54,height:54,borderRadius:14,background:`${t.color}14`,border:`1px solid ${t.color}28`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.7rem",flexShrink:0}}>{t.icon}</div>
                     <div style={{flex:1}}>
-                      <div style={{fontFamily:"var(--font-serif)",fontSize:"1.2rem",marginBottom:4}}>{t.label}</div>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".78rem",color:"var(--muted2)"}}>{t.desc}</div>
+                      <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-md)",fontWeight:400,color:"var(--ink)",marginBottom:4}}>{t.label}</div>
+                      <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",lineHeight:1.5}}>{t.desc}</div>
                     </div>
-                    <div style={{width:22,height:22,borderRadius:"50%",border:`2px solid ${accountType===t.id?t.color:"#DDD8CE"}`,background:accountType===t.id?t.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .2s"}}>
-                      {accountType===t.id&&<div style={{width:8,height:8,borderRadius:"50%",background:"#fff"}} />}
+                    <div style={{width:24,height:24,borderRadius:"50%",border:`2px solid ${accountType===t.id?t.color:"var(--stone2)"}`,background:accountType===t.id?t.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .22s"}}>
+                      {accountType===t.id&&<div style={{width:9,height:9,borderRadius:"50%",background:"#fff"}} />}
                     </div>
                   </div>
                 ))}
               </div>
-              <button className="btn" disabled={!accountType} onClick={()=>setScreen("form")} style={{width:"100%",padding:"14px",borderRadius:8,background:accountType?PLAN_TYPES.find(t=>t.id===accountType)?.color:"var(--stone2)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".85rem",letterSpacing:"2px",fontWeight:500}}>
-                CONTINUAR →
-              </button>
+              <div style={{display:"flex",gap:12}}>
+                <button className="btn btn-ghost" onClick={()=>setScreen("landing")} style={{padding:"14px 24px",borderRadius:10,fontSize:".85rem"}}>← Voltar</button>
+                <button className="btn btn-primary" disabled={!accountType} onClick={()=>setScreen("form")}
+                  style={{flex:1,padding:"14px",borderRadius:10,fontSize:".85rem",letterSpacing:"2px",
+                    background:accountType?(PLAN_TYPES.find(t=>t.id===accountType)?.color||"var(--ink)"):"var(--stone2)"}}>
+                  CONTINUAR →
+                </button>
+              </div>
             </div>
           )}
 
@@ -2430,14 +2574,14 @@
             <div style={{maxWidth:720,margin:"0 auto",padding:"32px 24px"}}>
               {/* Progress — baseado em campos reais (melhoria 3.1) */}
               <div style={{marginBottom:32}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)"}}>Etapa {step} de {totalSteps}</span>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--gold)"}}>
-                    {progress.pct}% · {progress.filled}/{progress.total} campos
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+                  <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",fontWeight:500}}>Etapa {step} de {totalSteps}</span>
+                  <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--gold)",fontWeight:600}}>
+                    {progress.pct}% completo
                   </span>
                 </div>
-                <div className="score-bar" style={{marginBottom:10,height:4}}>
-                  <div className="score-fill" style={{width:`${progress.pct}%`,background:"linear-gradient(90deg,#C9A96E,#E8C98A)"}} />
+                <div style={{height:6,background:"var(--stone)",borderRadius:3,overflow:"hidden",marginBottom:14}}>
+                  <div style={{height:"100%",borderRadius:3,width:`${progress.pct}%`,background:"linear-gradient(90deg,var(--gold),var(--gold-lt))",transition:"width .7s cubic-bezier(.22,1,.36,1)"}} />
                 </div>
                 <div style={{display:"flex",gap:4}}>
                   {["Empresa","Endereço","Responsável","Verificação","Acesso"].map((label,i)=>{
@@ -2447,10 +2591,11 @@
                         title={label}
                         style={{
                           flex:1,textAlign:"center",
-                          background:active?"var(--ink)":done?"#C9A96E15":"var(--stone2)",
-                          color:active?"#F7F5F0":done?"var(--gold)":"#B0A898",
-                          border:`1px solid ${active?"#1A1715":done?"#C9A96E40":"transparent"}`,
+                          background:active?"var(--ink)":done?"var(--gold-bg)":"var(--cream2)",
+                          color:active?"#F5F2ED":done?"var(--gold)":"var(--muted)",
+                          border:`1px solid ${active?"var(--ink2)":done?"#D4A83040":"var(--stone)"}`,
                           cursor:done||active?"pointer":"default",
+                          fontWeight:active?600:done?500:400,
                           overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis",
                         }}>
                         <span className="step-label-full" style={{display:"inline"}}>{done?"✓ ":""}{label}</span>
@@ -2462,14 +2607,16 @@
               </div>
 
               {/* Security score */}
-              <div style={{background:"#fff",borderRadius:12,padding:"14px 16px",marginBottom:24,border:"1px solid var(--stone)",display:"flex",alignItems:"center",gap:12}}>
+              <div style={{background:"#fff",borderRadius:12,padding:"16px 20px",marginBottom:28,border:"1px solid var(--stone)",boxShadow:"var(--shadow-xs)",display:"flex",alignItems:"center",gap:16}}>
                 <div style={{flex:1}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:4}}>PONTUAÇÃO DE SEGURANÇA</div>
-                  <div className="score-bar">
-                    <div className="score-fill" style={{width:`${securityScore}%`,background:securityScore>60?"linear-gradient(90deg,#5BAA5B,#7DC97D)":securityScore>30?"linear-gradient(90deg,#E8B86D,#F4D090)":"linear-gradient(90deg,#D4735A,#F0957A)"}} />
+                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2.5px",color:"var(--muted)",marginBottom:8,fontWeight:600}}>PONTUAÇÃO DE SEGURANÇA</div>
+                  <div style={{height:6,background:"var(--stone)",borderRadius:3,overflow:"hidden"}}>
+                    <div style={{height:"100%",borderRadius:3,width:`${securityScore}%`,
+                      background:securityScore>60?"linear-gradient(90deg,var(--green),#5BAA5B)":securityScore>30?"linear-gradient(90deg,var(--gold),var(--gold-lt))":"linear-gradient(90deg,var(--red),#D4735A)",
+                      transition:"width .8s cubic-bezier(.22,1,.36,1)"}} />
                   </div>
                 </div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"1.6rem",color:securityScore>60?"var(--green)":securityScore>30?"var(--gold)":"var(--red)",minWidth:48,textAlign:"right"}}>{securityScore}%</div>
+                <div style={{fontFamily:"var(--font-serif)",fontSize:"1.8rem",fontWeight:300,color:securityScore>60?"var(--green)":securityScore>30?"var(--gold)":"var(--red)",minWidth:52,textAlign:"right",lineHeight:1}}>{securityScore}<span style={{fontSize:".9rem"}}>%</span></div>
               </div>
 
               <div className={stepDir>=0?"slide-in":"slide-back"} key={`step-${step}`}>
@@ -2771,13 +2918,16 @@
               )}
 
               {/* Navigation buttons */}
-              <div style={{display:"flex",gap:12,marginTop:24}}>
-                {step>1&&<button className="btn" onClick={prevStep} style={{flex:1,padding:"13px",borderRadius:8,background:"#fff",color:"var(--ink)",border:"1px solid var(--stone2)",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"1px"}}>← Anterior</button>}
+              <div style={{display:"flex",gap:12,marginTop:28,paddingTop:24,borderTop:"1px solid var(--stone)"}}>
+                {step>1
+                  ?<button className="btn btn-ghost" onClick={prevStep} aria-label="Etapa anterior" style={{flex:1,padding:"14px",borderRadius:10,fontSize:".85rem",letterSpacing:"1px"}}>← Anterior</button>
+                  :<div style={{flex:1}} />
+                }
                 {step<totalSteps
-                  ?<button className="btn" onClick={nextStep} style={{flex:2,padding:"13px",borderRadius:8,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"2px",fontWeight:500}}>Próximo →</button>
-                  :<button className="btn" onClick={handleSubmit} disabled={isSubmitting} style={{flex:2,padding:"13px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"2px",fontWeight:500,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  ?<button className="btn btn-primary" onClick={nextStep} aria-label="Próxima etapa" style={{flex:2,padding:"14px",borderRadius:10,fontSize:".85rem",letterSpacing:"2px"}}>Próximo →</button>
+                  :<button className="btn btn-gold" onClick={handleSubmit} disabled={isSubmitting} aria-label="Enviar cadastro" style={{flex:2,padding:"14px",borderRadius:10,fontSize:".85rem",letterSpacing:"2px",display:"flex",alignItems:"center",justifyContent:"center"}}>
                     {isSubmitting&&<span className="spinner" />}
-                    {isSubmitting?"Salvando no Firebase...":"ENVIAR CADASTRO ✓"}
+                    {isSubmitting?"Salvando...":"ENVIAR CADASTRO ✓"}
                   </button>}
               </div>
             </div>
@@ -2785,12 +2935,12 @@
 
           {/* ══ REVIEW ════════════════════════════════════════════════════════ */}
           {screen==="review"&&(
-            <div className="fade-up" style={{maxWidth:580,margin:"0 auto",padding:"64px 24px",textAlign:"center"}}>
-              <div style={{fontSize:"4rem",marginBottom:24,animation:"popIn .4s ease"}}>🎉</div>
-              <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--gold)"}}>CADASTRO SALVO NO FIREBASE</span>
-              <h2 style={{fontFamily:"var(--font-serif)",fontSize:"2.5rem",fontWeight:300,margin:"16px 0 12px"}}>Falta pouco!</h2>
-              <p style={{fontFamily:"var(--font-sans)",fontSize:".85rem",color:"var(--muted2)",lineHeight:1.8,marginBottom:32}}>
-                Seus dados foram salvos com segurança no Firebase. Nossa equipe revisará em até <strong style={{color:"var(--ink)"}}>48 horas úteis</strong>.
+            <div className="fade-up" style={{maxWidth:560,margin:"0 auto",padding:"72px 24px",textAlign:"center"}}>
+              <div style={{width:80,height:80,borderRadius:"50%",background:"var(--green-bg)",border:"2px solid var(--green-bd)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"2.4rem",margin:"0 auto 28px",animation:"popIn .4s ease"}}>🎉</div>
+              <div className="badge badge-gold" style={{marginBottom:16}}>CADASTRO RECEBIDO</div>
+              <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,margin:"12px 0 14px",color:"var(--ink)"}}>Falta pouco!</h2>
+              <p style={{fontFamily:"var(--font-sans)",fontSize:".9rem",color:"var(--muted2)",lineHeight:1.8,marginBottom:36}}>
+                Seus dados foram salvos com segurança. Nossa equipe revisará em até <strong style={{color:"var(--ink)"}}>48 horas úteis</strong>.
               </p>
               <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:14,padding:"24px",marginBottom:24,textAlign:"left"}}>
                 <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:16}}>RESUMO DO CADASTRO</div>
@@ -2845,38 +2995,44 @@
 
           {/* ══ DASHBOARD ═════════════════════════════════════════════════════ */}
           {screen==="dashboard"&&(
-            <div className="fade-up" style={{maxWidth:900,margin:"0 auto",padding:"32px 24px"}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:28,flexWrap:"wrap",gap:12}}>
+            <div className="fade-up" style={{maxWidth:920,margin:"0 auto",padding:"36px 24px"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:32,flexWrap:"wrap",gap:16}}>
                 <div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"3px",color:"var(--muted)",marginBottom:4}}>PAINEL DO ESTABELECIMENTO</div>
-                  <h2 style={{fontFamily:"var(--font-serif)",fontSize:"2rem",fontWeight:300}}>{formData.businessName||"Meu Negócio"}</h2>
+                  <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"3px",color:"var(--muted)",marginBottom:6,fontWeight:600}}>PAINEL DO ESTABELECIMENTO</p>
+                  <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,color:"var(--ink)"}}>{formData.businessName||"Meu Negócio"}</h2>
                 </div>
                 <div style={{display:"flex",flexDirection:"column",gap:8,alignItems:"flex-end"}}>
-                  <div style={{background:"#FFF8ED",border:"1px solid #F0D99A",borderRadius:8,padding:"8px 14px",display:"flex",alignItems:"center",gap:6}}>
-                    <div style={{width:8,height:8,borderRadius:"50%",background:"#E8B86D"}} />
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"#7A6020"}}>Em análise</span>
+                  <div className="badge badge-gold">
+                    <span style={{width:6,height:6,borderRadius:"50%",background:"var(--gold)",display:"inline-block"}} />
+                    Em análise
                   </div>
-                  {authUser&&<div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)"}}>☁️ Firebase: {authUser.uid.slice(0,8)}...</div>}
+                  {authUser&&<div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)"}}>ID: {authUser.uid.slice(0,12)}…</div>}
                 </div>
               </div>
-              <div style={{background:"var(--ink)",borderRadius:14,padding:"20px 24px",marginBottom:20,display:"flex",gap:20,alignItems:"center",flexWrap:"wrap"}}>
+
+              {/* Security banner */}
+              <div style={{background:"linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%)",borderRadius:16,padding:"22px 28px",marginBottom:24,display:"flex",gap:24,alignItems:"center",flexWrap:"wrap",boxShadow:"var(--shadow-md)"}}>
                 <div style={{flex:1,minWidth:200}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--gold)",marginBottom:8}}>PONTUAÇÃO DE SEGURANÇA</div>
-                  <div className="score-bar" style={{background:"#2C2420"}}><div className="score-fill" style={{width:`${securityScore}%`,background:"linear-gradient(90deg,#C9A96E,#E8C98A)"}} /></div>
+                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2.5px",color:"var(--gold)",marginBottom:10,fontWeight:600}}>PONTUAÇÃO DE SEGURANÇA</div>
+                  <div style={{height:6,background:"rgba(255,255,255,.12)",borderRadius:3,overflow:"hidden"}}>
+                    <div style={{height:"100%",borderRadius:3,width:`${securityScore}%`,background:"linear-gradient(90deg,var(--gold),var(--gold-lt))",transition:"width .8s cubic-bezier(.22,1,.36,1)"}} />
+                  </div>
                 </div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"3rem",color:"var(--gold)"}}>{securityScore}%</div>
+                <div style={{fontFamily:"var(--font-serif)",fontSize:"3.2rem",color:"var(--gold)",fontWeight:300,lineHeight:1}}>{securityScore}<span style={{fontSize:"1.4rem"}}>%</span></div>
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:24}}>
+
+              {/* Stats grid */}
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:14,marginBottom:28}}>
                 {[
-                  {label:"Serviços", val:services.length,     icon:"✂️",color:"var(--gold)"},
-                  {label:"Produtos", val:products.length,     icon:"📦",color:"var(--blue)"},
-                  {label:"Campos",   val:`${progress.pct}%`,  icon:"📊",color:"#5BAA5B"},
-                  {label:"Status",   val:"Em análise",        icon:"⏳",color:"#E8B86D"},
+                  {label:"Serviços",  val:services.length,    icon:"✂️", color:"var(--gold)"},
+                  {label:"Produtos",  val:products.length,    icon:"📦", color:"var(--blue)"},
+                  {label:"Completo",  val:`${progress.pct}%`, icon:"📊", color:"var(--green)"},
+                  {label:"Status",    val:"Em análise",       icon:"⏳", color:"var(--warn)"},
                 ].map((s,i)=>(
-                  <div key={s.label} className="hov fade-up" style={{background:"#fff",borderRadius:12,padding:"18px",border:"1px solid var(--stone)",borderTop:`3px solid ${s.color}`,animationDelay:`${i*.07}s`}}>
-                    <div style={{fontSize:"1.4rem",marginBottom:6}}>{s.icon}</div>
-                    <div style={{fontFamily:"var(--font-serif)",fontSize:"1.8rem"}}>{s.val}</div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".7rem",color:"var(--muted)",marginTop:2}}>{s.label}</div>
+                  <div key={s.label} className="hov fade-up" style={{background:"#fff",borderRadius:14,padding:"20px",border:"1px solid var(--stone)",borderLeft:`4px solid ${s.color}`,boxShadow:"var(--shadow-xs)",animationDelay:`${i*.07}s`}}>
+                    <div style={{fontSize:"1.5rem",marginBottom:8}}>{s.icon}</div>
+                    <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-xl)",fontWeight:300,color:"var(--ink)"}}>{s.val}</div>
+                    <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginTop:3,fontWeight:500}}>{s.label}</div>
                   </div>
                 ))}
               </div>
