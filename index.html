@@ -312,11 +312,7 @@
     // 3. Configure Storage Rules para permitir upload apenas para o próprio userId.
     // 4. Preencha CLOUD_FN_URL abaixo para OTP seguro (gerado no servidor).
     // 5. Liste os UIDs de admin em ADMIN_UIDS para proteger o painel administrativo.
-    if (typeof window !== "undefined") {
-      console.warn("⚠️ [beleza.hub] API Key exposta no HTML — restrinja por domínio no Google Cloud Console.");
-      console.warn("⚠️ [beleza.hub] OTP gerado no cliente — configure CLOUD_FN_URL para produção.");
-      console.warn("⚠️ [beleza.hub] Configure Firestore Security Rules antes de publicar.");
-    }
+
 
     // 🔐 UIDs dos administradores — preencha antes de publicar
     // Ex: const ADMIN_UIDS = ["uid-do-admin-1", "uid-do-admin-2"];
@@ -1296,7 +1292,7 @@
             <div style={{position:"relative",maxWidth:720,margin:"0 auto",textAlign:"center"}}>
               <span style={{fontFamily:"var(--font-sans)",fontSize:".62rem",letterSpacing:"5px",color:"var(--gold)"}}>ENCONTRE SEU SALÃO IDEAL</span>
               <h1 style={{fontFamily:"var(--font-serif)",fontSize:"clamp(2rem,5vw,3.2rem)",color:"#F7F5F0",fontWeight:300,lineHeight:1.15,margin:"16px 0 32px"}}>
-                Salões verificados,<br/><em style={{color:"var(--gold)"}}>perto de você</em>
+                Salões perto de você
               </h1>
               {/* Search bar */}
               <div style={{background:"#fff",borderRadius:12,padding:"6px 6px 6px 18px",display:"flex",gap:8,alignItems:"center",boxShadow:"0 12px 40px rgba(0,0,0,.3)",marginBottom:14}}>
@@ -1382,6 +1378,7 @@
             )}
 
             {!loading && salons.length > 0 && (
+              <>
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(265px,1fr))",gap:16}}>
                 {pagedSalons.map((s,i)=>(
                   <div key={s.id} className="hov fade-up" onClick={()=>setSelected(sel=>sel?.id===s.id?null:s)}
@@ -1422,13 +1419,13 @@
               </div>
 
               {hasMore && (
-                <div style={{gridColumn:"1/-1",textAlign:"center",marginTop:8}}>
+                <div style={{textAlign:"center",marginTop:16}}>
                   <button onClick={()=>setPage(p=>p+1)} className="btn" style={{padding:"10px 32px",borderRadius:8,border:"1px solid var(--stone2)",background:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem",color:"var(--muted2)"}}>
                     Ver mais {Math.min(PAGE_SIZE, sortedSalons.length-pagedSalons.length)} salões
                   </button>
                 </div>
               )}
-              </div>
+              </>
             )}
 
             {/* CTA para cadastro */}
