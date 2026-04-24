@@ -31,8 +31,11 @@
   <script src="https://cdn.jsdelivr.net/npm/firebase@10.12.0/firebase-storage-compat.min.js"></script>
 
   <!-- React 18 + ReactDOM (jsDelivr) -->
-  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel Standalone — compila JSX no browser sem build step -->
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
 
   <!--
     Suprime o aviso cosmético do Babel Standalone no console.
@@ -53,14 +56,15 @@
 
   <!-- Babel Standalone — compila JSX no browser sem build step -->
   <!-- Em produção use Vite/CRA para eliminar este overhead (~200KB) -->
-  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.4/babel.min.js"></script>
-
+  
   <!-- Guard: verifica se dependências carregaram antes de continuar -->
   <script>
     window.addEventListener('error', function(e) {
       // Captura erros de carregamento de scripts CDN
       if (e.target && e.target.src) {
-        document.getElementById('app-loading').innerHTML =
+        var el = document.getElementById('app-loading');
+        if (!el) return; // body ainda não foi parseado — evita erro secundário
+        el.innerHTML =
           '<div style="font-family:sans-serif;text-align:center;padding:40px;color:#D4735A">' +
           '<div style="font-size:2rem;margin-bottom:12px">⚠️</div>' +
           '<div style="font-size:1rem;font-weight:600;margin-bottom:8px">Falha ao carregar dependência</div>' +
@@ -133,14 +137,14 @@
     html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
     body {
-      font-family: var(--font-sans);
-      background: var(--cream);
-      color: var(--ink);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #F8F5F0;
+      color: #0E0C09;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       line-height: 1.7;
-      font-size: var(--t-base);
+      font-size: 1rem;
     }
 
     /* ── Animations ──────────────────────────────────────────────────────────── */
@@ -157,7 +161,7 @@
     .slide-in   { animation: slideR .36s cubic-bezier(.22,1,.36,1) both; }
     .slide-back { animation: slideL .36s cubic-bezier(.22,1,.36,1) both; }
     .skeleton   {
-      background: linear-gradient(90deg,var(--stone) 25%,var(--cream2) 50%,var(--stone) 75%);
+      background: linear-gradient(90deg,#DDD5CA 25%,#EEE9E1 50%,#DDD5CA 75%);
       background-size:600px 100%;
       animation: shimmer 1.6s infinite;
       border-radius: var(--radius-xs);
@@ -167,25 +171,25 @@
     .inp {
       width: 100%;
       padding: 14px 16px;
-      border: 1.5px solid var(--stone2);
+      border: 1.5px solid #C4BAB0;
       border-radius: var(--radius-sm);
       background: #fff;
-      font-family: var(--font-sans);
-      font-size: var(--t-base);
-      color: var(--ink);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1rem;
+      color: #0E0C09;
       outline: none;
       line-height: 1.5;
       transition: border-color .18s, box-shadow .18s, transform .14s;
       font-weight: 400;
     }
-    .inp::placeholder { color: var(--stone2); font-size: var(--t-sm); }
+    .inp::placeholder { color: #C4BAB0; font-size: .875rem; }
     .inp:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px var(--gold-ring);
+      border-color: #9A6D1F;
+      box-shadow: 0 0 0 3px rgba(154,109,31,.2);
       transform: translateY(-1px);
     }
-    .inp.err  { border-color: var(--red);   box-shadow: 0 0 0 3px var(--red-bg); }
-    .inp.ok   { border-color: var(--green); }
+    .inp.err  { border-color: #A83220;   box-shadow: 0 0 0 3px #A8322010; }
+    .inp.ok   { border-color: #1E6B22; }
     select.inp   { cursor: pointer; }
     textarea.inp { resize: vertical; min-height: 96px; }
 
@@ -195,10 +199,10 @@
     /* Field label — LEGÍVEL */
     .field-label {
       display: block;
-      font-family: var(--font-sans);
-      font-size: var(--t-xs);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: .75rem;
       font-weight: 700;
-      color: var(--muted2);
+      color: #3A342A;
       letter-spacing: .8px;
       text-transform: uppercase;
       margin-bottom: 8px;
@@ -209,55 +213,55 @@
       border: none;
       outline: none;
       cursor: pointer;
-      font-family: var(--font-sans);
-      font-size: var(--t-sm);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: .875rem;
       font-weight: 500;
       transition: all .2s cubic-bezier(.22,1,.36,1);
     }
-    .btn:hover:not(:disabled)  { filter: brightness(1.06); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-xs); filter: brightness(.97); }
+    .btn:hover:not(:disabled)  { filter: brightness(1.06); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.10),0 2px 8px rgba(0,0,0,0.06); }
+    .btn:active:not(:disabled) { transform: translateY(0); box-shadow: 0 1px 4px rgba(0,0,0,0.08); filter: brightness(.97); }
     .btn:disabled              { opacity: .45; cursor: not-allowed; }
 
     .btn-primary {
-      background: var(--ink);
+      background: #0E0C09;
       color: #F2EDE4;
       letter-spacing: 2px;
       font-weight: 700;
-      font-size: var(--t-xs);
+      font-size: .75rem;
     }
     .btn-gold {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+      background: linear-gradient(135deg, #9A6D1F 0%, #BF8E3A 100%);
       color: #fff;
       letter-spacing: 2px;
       font-weight: 700;
-      font-size: var(--t-xs);
+      font-size: .75rem;
       box-shadow: 0 4px 16px rgba(154,109,31,.32);
     }
     .btn-ghost {
       background: #fff;
-      color: var(--muted2);
-      border: 1.5px solid var(--stone2);
+      color: #3A342A;
+      border: 1.5px solid #C4BAB0;
       font-weight: 600;
-      font-size: var(--t-sm);
+      font-size: .875rem;
     }
 
     .hov { transition: all .24s cubic-bezier(.22,1,.36,1); cursor: pointer; }
-    .hov:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg) !important; }
+    .hov:hover { transform: translateY(-4px); box-shadow: 0 16px 56px rgba(0,0,0,0.14),0 4px 16px rgba(0,0,0,0.08) !important; }
 
     /* ── Form helpers ───────────────────────────────────────────────────────── */
     .drop-zone {
-      border: 2px dashed var(--stone2);
+      border: 2px dashed #C4BAB0;
       border-radius: var(--radius-md);
       text-align: center;
       cursor: pointer;
       transition: all .22s;
       background: #fff;
     }
-    .drop-zone:hover { border-color: var(--gold); background: var(--gold-bg); }
+    .drop-zone:hover { border-color: #9A6D1F; background: #FBF6EE; }
 
     .check-box {
       width: 22px; height: 22px;
-      border: 2px solid var(--stone2);
+      border: 2px solid #C4BAB0;
       border-radius: 6px;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
@@ -265,16 +269,16 @@
       flex-shrink: 0;
       background: #fff;
     }
-    .check-box:hover { border-color: var(--gold); transform: scale(1.08); }
-    .check-box.on    { background: var(--gold); border-color: var(--gold); animation: popIn .22s ease; }
+    .check-box:hover { border-color: #9A6D1F; transform: scale(1.08); }
+    .check-box.on    { background: #9A6D1F; border-color: #9A6D1F; animation: popIn .22s ease; }
 
-    .score-bar  { height: 7px; border-radius: 4px; background: var(--stone2); overflow: hidden; }
+    .score-bar  { height: 7px; border-radius: 4px; background: #C4BAB0; overflow: hidden; }
     .score-fill { height: 100%; border-radius: 4px; transition: width .7s cubic-bezier(.22,1,.36,1); }
 
     /* Step pills */
     .step-pill {
-      font-family: var(--font-sans);
-      font-size: var(--t-xs);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: .75rem;
       font-weight: 600;
       padding: 7px 12px;
       border-radius: 20px;
@@ -287,10 +291,10 @@
     .pass-wrap { position: relative; }
     .pass-eye  {
       position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      cursor: pointer; font-size: 1rem; color: var(--muted); user-select: none;
+      cursor: pointer; font-size: 1rem; color: #5A5044; user-select: none;
       transition: transform .15s, color .15s;
     }
-    .pass-eye:hover { transform: translateY(-50%) scale(1.18); color: var(--gold); }
+    .pass-eye:hover { transform: translateY(-50%) scale(1.18); color: #9A6D1F; }
 
     /* Spinner */
     .spinner {
@@ -304,13 +308,13 @@
     .sec-dot { animation: pulse 2.2s ease infinite; }
 
     /* Upload bar */
-    .upload-bar  { height: 4px; background: var(--stone); border-radius: 2px; overflow: hidden; margin-top: 8px; }
-    .upload-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width .28s; }
+    .upload-bar  { height: 4px; background: #DDD5CA; border-radius: 2px; overflow: hidden; margin-top: 8px; }
+    .upload-fill { height: 100%; background: #9A6D1F; border-radius: 2px; transition: width .28s; }
 
     /* Badge */
     .badge {
-      font-family: var(--font-sans);
-      font-size: var(--t-xs);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: .75rem;
       font-weight: 700;
       letter-spacing: 1.2px;
       text-transform: uppercase;
@@ -320,16 +324,16 @@
       align-items: center;
       gap: 5px;
     }
-    .badge-gold  { background: var(--gold-bg); color: var(--gold);  border: 1px solid #C49820; }
-    .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
-    .badge-stone { background: var(--cream2); color: var(--muted2); border: 1px solid var(--stone); }
+    .badge-gold  { background: #FBF6EE; color: #9A6D1F;  border: 1px solid #C49820; }
+    .badge-green { background: #1E6B2212; color: #1E6B22; border: 1px solid #1E6B2235; }
+    .badge-stone { background: #EEE9E1; color: #3A342A; border: 1px solid #DDD5CA; }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--cream2); }
-    ::-webkit-scrollbar-thumb { background: var(--stone2); border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #EEE9E1; }
+    ::-webkit-scrollbar-thumb { background: #C4BAB0; border-radius: 3px; }
 
-    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    :focus-visible { outline: 2px solid #9A6D1F; outline-offset: 3px; }
 
     /* ── Responsive grid ──────────────────────────────────────────────────── */
     .row-2 {
@@ -358,42 +362,42 @@
       background: rgba(248,245,240,.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--stone);
-      box-shadow: 0 1px 0 rgba(0,0,0,.04), var(--shadow-xs);
+      border-bottom: 1px solid #DDD5CA;
+      box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 1px 4px rgba(0,0,0,0.08);
     }
 
     /* ── Section header ──────────────────────────────────────────────────────── */
     .section-title {
-      font-family: var(--font-serif);
-      font-size: var(--t-xl);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.75rem;
       font-weight: 300;
       line-height: 1.2;
-      color: var(--ink);
+      color: #0E0C09;
     }
 
     /* ── Required marker ────────────────────────────────────────────────────── */
-    .req { color: var(--gold); margin-left: 2px; }
+    .req { color: #9A6D1F; margin-left: 2px; }
 
     /* ── Info boxes ─────────────────────────────────────────────────────────── */
-    .info-box      { background: var(--gold-bg); border: 1px solid #D4A83040; border-radius: 10px; padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; }
+    .info-box      { background: #FBF6EE; border: 1px solid #D4A83040; border-radius: 10px; padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start; }
     .info-box-blue { background: #EEF5FC; border-color: #BDD5EE; }
-    .info-box-warn { background: var(--warn-bg); border-color: var(--warn-bd); }
+    .info-box-warn { background: #FAF0D8; border-color: #C49820; }
 
     /* ── Loading screen ─────────────────────────────────────────────────────── */
     #app-loading {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      background: var(--cream); z-index: 9999; gap: 18px;
+      background: #F8F5F0; z-index: 9999; gap: 18px;
       transition: opacity .45s;
     }
     #app-loading.hidden { opacity: 0; pointer-events: none; }
-    #app-loading .logo  { font-family: var(--font-serif); font-size: 2.4rem; color: var(--ink); letter-spacing: -1px; }
-    #app-loading .logo em { color: var(--gold); font-style: italic; }
-    #app-loading .hint  { font-family: var(--font-sans); font-size: var(--t-xs); color: var(--muted); letter-spacing: 4px; font-weight: 600; }
+    #app-loading .logo  { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.4rem; color: #0E0C09; letter-spacing: -1px; }
+    #app-loading .logo em { color: #9A6D1F; font-style: italic; }
+    #app-loading .hint  { font-family: 'DM Sans', system-ui, sans-serif; font-size: .75rem; color: #5A5044; letter-spacing: 4px; font-weight: 600; }
     #app-loading .ring  {
       width: 40px; height: 40px; border-radius: 50%;
-      border: 2.5px solid var(--stone); border-top-color: var(--gold);
+      border: 2.5px solid #DDD5CA; border-top-color: #9A6D1F;
       animation: spin .7s linear infinite;
     }
 
@@ -405,24 +409,25 @@
       padding: 20px;
       background: #fff;
       border-radius: 14px;
-      border: 1.5px solid var(--stone);
+      border: 1.5px solid #DDD5CA;
       transition: all .22s cubic-bezier(.22,1,.36,1);
-      box-shadow: var(--shadow-xs);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
-    .service-card:hover { border-color: var(--stone2); box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+    .service-card:hover { border-color: #C4BAB0; box-shadow: 0 2px 8px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.05); transform: translateY(-1px); }
 
     /* ── Price chip ─────────────────────────────────────────────────────────── */
     .price-chip {
-      font-family: var(--font-sans);
-      font-size: var(--t-sm);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: .875rem;
       font-weight: 700;
-      color: var(--gold);
-      background: var(--gold-bg);
+      color: #9A6D1F;
+      background: #FBF6EE;
       border: 1px solid #D4A83030;
       padding: 4px 12px;
       border-radius: 20px;
       display: inline-block;
     }
+  </style>
 </head>
 
 <body>
@@ -466,7 +471,7 @@
       if (el) { el.classList.add("hidden"); setTimeout(() => el.remove(), 400); }
     }
     // Fix: fallback timeout para evitar loading screen presa se Firebase falhar
-    setTimeout(removeLoader, 8000);
+    setTimeout(removeLoader, 3000); // fallback: remove loading screen após 3s mesmo sem Firebase
 
     // ════════════════════════════════════════════════════════════════════════════
     // 1. FIREBASE INIT
@@ -878,9 +883,9 @@
     function FormSection({title,icon,children}){
       return (
         <div>
-          <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:28,paddingBottom:16,borderBottom:"1px solid var(--stone)"}}>
-            <div style={{width:40,height:40,borderRadius:12,background:"var(--gold-bg)",border:"1px solid #D4A83030",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.2rem",flexShrink:0}}>{icon}</div>
-            <h3 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-xl)",fontWeight:300,color:"var(--ink)",lineHeight:1.1}}>{title}</h3>
+          <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:28,paddingBottom:16,borderBottom:"1px solid #DDD5CA"}}>
+            <div style={{width:40,height:40,borderRadius:12,background:"#FBF6EE",border:"1px solid #D4A83030",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.2rem",flexShrink:0}}>{icon}</div>
+            <h3 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.75rem",fontWeight:300,color:"#0E0C09",lineHeight:1.1}}>{title}</h3>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:18}}>{children}</div>
         </div>
@@ -898,7 +903,7 @@
             {label}{required&&<span className="req">*</span>}
           </label>
           {children}
-          {error&&<div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--red)",marginTop:5,display:"flex",alignItems:"center",gap:4,animation:"fadeUp .2s ease"}}>⚠ {error}</div>}
+          {error&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#A83220",marginTop:5,display:"flex",alignItems:"center",gap:4,animation:"fadeUp .2s ease"}}>⚠ {error}</div>}
         </div>
       );
     }
@@ -919,7 +924,7 @@
             ? <img src={preview} alt="preview" style={{maxHeight:"100%",maxWidth:"100%",objectFit:"cover",borderRadius:8}} />
             : <div style={{textAlign:"center"}}>
                 <div style={{fontSize:"1.5rem",marginBottom:6}}>📷</div>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".7rem",color:"var(--muted)"}}>{label}</div>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".7rem",color:"#5A5044"}}>{label}</div>
               </div>
           }
           <input ref={ref} type="file" accept="image/jpeg,image/png,image/webp" onChange={onChange} style={{display:"none"}} />
@@ -983,20 +988,20 @@
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
             <span style={{fontSize:"1.1rem"}}>{icon}</span>
-            <span style={{fontFamily:"var(--font-serif)",fontSize:"1.3rem",fontWeight:400}}>{title}</span>
-            {count>0&&<span style={{fontFamily:"var(--font-sans)",fontSize:".7rem",background:"var(--cream)",color:"var(--muted)",padding:"2px 8px",borderRadius:12,border:"1px solid var(--stone)"}}>{count}</span>}
+            <span style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.3rem",fontWeight:400}}>{title}</span>
+            {count>0&&<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".7rem",background:"#F8F5F0",color:"#5A5044",padding:"2px 8px",borderRadius:12,border:"1px solid #DDD5CA"}}>{count}</span>}
           </div>
-          <button onClick={onAdd} className="btn" style={{padding:"7px 16px",borderRadius:8,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".72rem",letterSpacing:"1px"}}>+ ADICIONAR</button>
+          <button onClick={onAdd} className="btn" style={{padding:"7px 16px",borderRadius:8,background:"#0E0C09",color:"#F7F5F0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",letterSpacing:"1px"}}>+ ADICIONAR</button>
         </div>
       );
     }
 
     function EmptyState({icon,text,sub}){
       return (
-        <div style={{textAlign:"center",padding:"40px 24px",background:"#fff",borderRadius:12,border:"2px dashed var(--stone)",marginBottom:16}}>
+        <div style={{textAlign:"center",padding:"40px 24px",background:"#fff",borderRadius:12,border:"2px dashed #DDD5CA",marginBottom:16}}>
           <div style={{fontSize:"2rem",marginBottom:8}}>{icon}</div>
-          <div style={{fontFamily:"var(--font-serif)",fontSize:"1.1rem",color:"var(--muted2)"}}>{text}</div>
-          <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"#B0A898",marginTop:4}}>{sub}</div>
+          <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.1rem",color:"#3A342A"}}>{text}</div>
+          <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#B0A898",marginTop:4}}>{sub}</div>
         </div>
       );
     }
@@ -1070,14 +1075,14 @@
       const pendingSuggestions=suggestedServices.filter(s=>!existingNames.includes(s));
 
       return(
-        <div style={{background:"#fff",border:"1.5px solid var(--stone)",borderRadius:18,padding:"28px",marginBottom:20,boxShadow:"var(--shadow-sm)"}}>
+        <div style={{background:"#fff",border:"1.5px solid #DDD5CA",borderRadius:18,padding:"28px",marginBottom:20,boxShadow:"0 2px 8px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.05)"}}>
           {/* Header */}
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,paddingBottom:18,borderBottom:"1px solid var(--stone)"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,paddingBottom:18,borderBottom:"1px solid #DDD5CA"}}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:42,height:42,borderRadius:12,background:"linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.2rem",boxShadow:"var(--shadow-sm)"}}>✂️</div>
+              <div style={{width:42,height:42,borderRadius:12,background:"linear-gradient(135deg,#0E0C09 0%,#1E1A13 100%)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.2rem",boxShadow:"0 2px 8px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.05)"}}>✂️</div>
               <div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-lg)",fontWeight:400,color:"var(--ink)",lineHeight:1}}>Serviços</div>
-                {services.length>0&&<div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:2,fontWeight:500}}>{services.length} cadastrado{services.length>1?"s":""}</div>}
+                <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.375rem",fontWeight:400,color:"#0E0C09",lineHeight:1}}>Serviços</div>
+                {services.length>0&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#5A5044",marginTop:2,fontWeight:500}}>{services.length} cadastrado{services.length>1?"s":""}</div>}
               </div>
             </div>
             <button onClick={()=>{resetForm();setAdding(true);setTimeout(()=>formRef.current?.scrollIntoView({behavior:"smooth",block:"start"}),60);}}
@@ -1089,16 +1094,16 @@
 
           {/* CNAE suggestions */}
           {pendingSuggestions.length>0&&(
-            <div style={{background:"linear-gradient(135deg,var(--gold-bg) 0%,#FFF8E8 100%)",border:"1px solid #D4A83030",borderRadius:12,padding:"16px 18px",marginBottom:18}}>
-              <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--warn)",letterSpacing:"1.5px",marginBottom:12,fontWeight:700,display:"flex",alignItems:"center",gap:8}}>
+            <div style={{background:"linear-gradient(135deg,#FBF6EE 0%,#FFF8E8 100%)",border:"1px solid #D4A83030",borderRadius:12,padding:"16px 18px",marginBottom:18}}>
+              <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#6B4C08",letterSpacing:"1.5px",marginBottom:12,fontWeight:700,display:"flex",alignItems:"center",gap:8}}>
                 <span>💡</span> SUGERIDOS PELO SEU CNAE
               </div>
               <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
                 {pendingSuggestions.map(s=>(
                   <button key={s} onClick={()=>addSuggested(s)} className="btn"
-                    style={{padding:"7px 16px",borderRadius:20,border:"1.5px solid var(--gold)",background:"#fff",
-                    fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted2)",fontWeight:600,
-                    boxShadow:"var(--shadow-xs)"}}>
+                    style={{padding:"7px 16px",borderRadius:20,border:"1.5px solid #9A6D1F",background:"#fff",
+                    fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#3A342A",fontWeight:600,
+                    boxShadow:"0 1px 4px rgba(0,0,0,0.08)"}}>
                     + {s}
                   </button>
                 ))}
@@ -1108,10 +1113,10 @@
 
           {/* Lista de serviços */}
           {services.length===0&&!adding&&(
-            <div style={{textAlign:"center",padding:"48px 24px",background:"var(--cream)",borderRadius:14,border:"2px dashed var(--stone)",marginBottom:4}}>
+            <div style={{textAlign:"center",padding:"48px 24px",background:"#F8F5F0",borderRadius:14,border:"2px dashed #DDD5CA",marginBottom:4}}>
               <div style={{fontSize:"2.4rem",marginBottom:12}}>✂️</div>
-              <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-lg)",color:"var(--ink2)",marginBottom:6}}>Nenhum serviço cadastrado</div>
-              <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)"}}>Clique em <strong>+ ADICIONAR</strong> para incluir seus serviços com fotos e preços</div>
+              <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.375rem",color:"#1E1A13",marginBottom:6}}>Nenhum serviço cadastrado</div>
+              <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#5A5044"}}>Clique em <strong>+ ADICIONAR</strong> para incluir seus serviços com fotos e preços</div>
             </div>
           )}
 
@@ -1120,33 +1125,33 @@
               <div key={s.id} className="service-card">
                 {/* Foto thumbnail */}
                 {s.photos&&s.photos.length>0?(
-                  <div style={{position:"relative",width:72,height:72,borderRadius:10,overflow:"hidden",flexShrink:0,boxShadow:"var(--shadow-xs)"}}>
+                  <div style={{position:"relative",width:72,height:72,borderRadius:10,overflow:"hidden",flexShrink:0,boxShadow:"0 1px 4px rgba(0,0,0,0.08)"}}>
                     <img src={s.photos[0].preview} alt={s.name} style={{width:"100%",height:"100%",objectFit:"cover"}} />
                     {s.photos.length>1&&(
-                      <div style={{position:"absolute",bottom:4,right:4,background:"rgba(14,12,9,.7)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 5px",borderRadius:4,fontWeight:600}}>+{s.photos.length-1}</div>
+                      <div style={{position:"absolute",bottom:4,right:4,background:"rgba(14,12,9,.7)",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 5px",borderRadius:4,fontWeight:600}}>+{s.photos.length-1}</div>
                     )}
                   </div>
                 ):(
-                  <div style={{width:72,height:72,borderRadius:10,background:"var(--cream2)",border:"1.5px dashed var(--stone2)",flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:3}}>
+                  <div style={{width:72,height:72,borderRadius:10,background:"#EEE9E1",border:"1.5px dashed #C4BAB0",flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:3}}>
                     <span style={{fontSize:"1.4rem"}}>✂️</span>
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:".55rem",color:"var(--stone2)",fontWeight:500}}>SEM FOTO</span>
+                    <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".55rem",color:"#C4BAB0",fontWeight:500}}>SEM FOTO</span>
                   </div>
                 )}
 
                 <div style={{flex:1,minWidth:0}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-base)",fontWeight:700,color:"var(--ink)",marginBottom:4,lineHeight:1.3}}>{s.name}</div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",marginBottom:8,display:"flex",alignItems:"center",gap:6}}>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:"1rem",fontWeight:700,color:"#0E0C09",marginBottom:4,lineHeight:1.3}}>{s.name}</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#5A5044",marginBottom:8,display:"flex",alignItems:"center",gap:6}}>
                     {s.category&&<span style={{fontWeight:500}}>{s.category}</span>}
-                    {s.category&&<span style={{color:"var(--stone2)"}}>·</span>}
+                    {s.category&&<span style={{color:"#C4BAB0"}}>·</span>}
                     <span>{s.duration} min</span>
                   </div>
                   <span className="price-chip">{fmtServicePrice(s)}</span>
-                  {s.description&&<div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:8,lineHeight:1.5,overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{s.description}</div>}
+                  {s.description&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#5A5044",marginTop:8,lineHeight:1.5,overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{s.description}</div>}
                 </div>
 
                 <div style={{display:"flex",flexDirection:"column",gap:6,flexShrink:0}}>
-                  <button onClick={()=>edit(s)} className="btn btn-ghost" style={{padding:"7px 14px",borderRadius:8,fontSize:"var(--t-xs)"}}>Editar</button>
-                  <button onClick={()=>remove(s.id)} className="btn" style={{padding:"7px 14px",borderRadius:8,border:"1.5px solid #E8C0B0",background:"#FFF8F6",fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--red)",fontWeight:600}}>Remover</button>
+                  <button onClick={()=>edit(s)} className="btn btn-ghost" style={{padding:"7px 14px",borderRadius:8,fontSize:".75rem"}}>Editar</button>
+                  <button onClick={()=>remove(s.id)} className="btn" style={{padding:"7px 14px",borderRadius:8,border:"1.5px solid #E8C0B0",background:"#FFF8F6",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#A83220",fontWeight:600}}>Remover</button>
                 </div>
               </div>
             ))}
@@ -1154,16 +1159,16 @@
 
           {/* Formulário */}
           {adding&&(
-            <div ref={formRef} className="fade-up" style={{background:"var(--cream)",border:"1.5px solid var(--stone)",borderRadius:16,padding:"28px",marginTop:8}}>
+            <div ref={formRef} className="fade-up" style={{background:"#F8F5F0",border:"1.5px solid #DDD5CA",borderRadius:16,padding:"28px",marginTop:8}}>
 
               {/* Form header */}
-              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:24,paddingBottom:16,borderBottom:"1px solid var(--stone)"}}>
-                <div style={{width:32,height:32,borderRadius:8,background:editId?"var(--gold-bg)":"var(--ink)",border:editId?"1px solid #D4A83030":"none",display:"flex",alignItems:"center",justifyContent:"center",fontSize:".9rem"}}>
+              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:24,paddingBottom:16,borderBottom:"1px solid #DDD5CA"}}>
+                <div style={{width:32,height:32,borderRadius:8,background:editId?"#FBF6EE":"#0E0C09",border:editId?"1px solid #D4A83030":"none",display:"flex",alignItems:"center",justifyContent:"center",fontSize:".9rem"}}>
                   {editId?"✏️":"✨"}
                 </div>
                 <div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",letterSpacing:"2px",color:"var(--muted)",fontWeight:700}}>{editId?"EDITANDO SERVIÇO":"NOVO SERVIÇO"}</div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted2)",marginTop:1}}>Preencha as informações abaixo</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",letterSpacing:"2px",color:"#5A5044",fontWeight:700}}>{editId?"EDITANDO SERVIÇO":"NOVO SERVIÇO"}</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#3A342A",marginTop:1}}>Preencha as informações abaixo</div>
                 </div>
               </div>
 
@@ -1187,7 +1192,7 @@
                     <input className="inp" type="number" min="5" max="480" step="5" value={form.duration}
                       onChange={e=>setForm(p=>({...p,duration:e.target.value}))} inputMode="numeric"
                       style={{maxWidth:140}} />
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",whiteSpace:"nowrap"}}>
+                    <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#5A5044",whiteSpace:"nowrap"}}>
                       {Math.floor(form.duration/60)>0?`${Math.floor(form.duration/60)}h `:""}
                       {form.duration%60>0?`${form.duration%60}min`:""}
                     </span>
@@ -1196,22 +1201,22 @@
               </div>
 
               {/* Preço — obrigatório */}
-              <div style={{background:"#fff",border:"1.5px solid var(--stone)",borderRadius:12,padding:"20px",marginBottom:18}}>
+              <div style={{background:"#fff",border:"1.5px solid #DDD5CA",borderRadius:12,padding:"20px",marginBottom:18}}>
                 <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",fontWeight:700,color:"var(--ink)"}}>Preço</span>
-                  <span className="req" style={{fontSize:"var(--t-sm)"}}>*</span>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginLeft:4}}>obrigatório</span>
+                  <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",fontWeight:700,color:"#0E0C09"}}>Preço</span>
+                  <span className="req" style={{fontSize:".875rem"}}>*</span>
+                  <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#5A5044",marginLeft:4}}>obrigatório</span>
                 </div>
                 <div style={{display:"flex",gap:8,marginBottom:16}}>
                   {[{val:"fixed",label:"💰 Preço fixo"},{val:"range",label:"📊 Faixa de preço"}].map(opt=>(
                     <button key={opt.val} onClick={()=>setForm(p=>({...p,priceType:opt.val}))} className="btn"
                       style={{flex:1,padding:"10px 16px",borderRadius:10,
-                        border:`2px solid ${form.priceType===opt.val?"var(--gold)":"var(--stone2)"}`,
-                        background:form.priceType===opt.val?"var(--gold-bg)":"#fff",
-                        fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",
-                        color:form.priceType===opt.val?"var(--gold)":"var(--muted)",
+                        border:`2px solid ${form.priceType===opt.val?"#9A6D1F":"#C4BAB0"}`,
+                        background:form.priceType===opt.val?"#FBF6EE":"#fff",
+                        fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",
+                        color:form.priceType===opt.val?"#9A6D1F":"#5A5044",
                         fontWeight:form.priceType===opt.val?700:500,
-                        boxShadow:form.priceType===opt.val?"var(--shadow-xs)":"none"}}>
+                        boxShadow:form.priceType===opt.val?"0 1px 4px rgba(0,0,0,0.08)":"none"}}>
                       {opt.label}
                     </button>
                   ))}
@@ -1219,18 +1224,18 @@
                 {form.priceType==="fixed"?(
                   <Field label="Valor (R$)">
                     <div style={{position:"relative"}}>
-                      <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:"var(--t-base)",color:"var(--muted)",fontWeight:600}}>R$</span>
+                      <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:"1rem",color:"#5A5044",fontWeight:600}}>R$</span>
                       <input className="inp" type="text" value={form.price}
                         onChange={e=>setForm(p=>({...p,price:fmtPrice(e.target.value)}))}
                         placeholder="0,00" inputMode="decimal"
-                        style={{paddingLeft:44,maxWidth:240,fontWeight:600,fontSize:"var(--t-md)"}} />
+                        style={{paddingLeft:44,maxWidth:240,fontWeight:600,fontSize:"1.125rem"}} />
                     </div>
                   </Field>
                 ):(
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
                     <Field label="Mínimo (R$)">
                       <div style={{position:"relative"}}>
-                        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",fontWeight:600}}>R$</span>
+                        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#5A5044",fontWeight:600}}>R$</span>
                         <input className="inp" type="text" value={form.priceMin}
                           onChange={e=>setForm(p=>({...p,priceMin:fmtPrice(e.target.value)}))}
                           placeholder="0,00" inputMode="decimal" style={{paddingLeft:44,fontWeight:600}} />
@@ -1238,7 +1243,7 @@
                     </Field>
                     <Field label="Máximo (R$)">
                       <div style={{position:"relative"}}>
-                        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted)",fontWeight:600}}>R$</span>
+                        <span style={{position:"absolute",left:16,top:"50%",transform:"translateY(-50%)",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#5A5044",fontWeight:600}}>R$</span>
                         <input className="inp" type="text" value={form.priceMax}
                           onChange={e=>setForm(p=>({...p,priceMax:fmtPrice(e.target.value)}))}
                           placeholder="0,00" inputMode="decimal" style={{paddingLeft:44,fontWeight:600}} />
@@ -1258,15 +1263,15 @@
               </div>
 
               {/* Fotos */}
-              <div style={{background:"#fff",border:"1.5px solid var(--stone)",borderRadius:12,padding:"20px",marginBottom:24}}>
+              <div style={{background:"#fff",border:"1.5px solid #DDD5CA",borderRadius:12,padding:"20px",marginBottom:24}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
                   <div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",fontWeight:700,color:"var(--ink)"}}>Fotos do serviço</div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:2}}>Até 5 fotos · JPG, PNG ou WebP · máx 5MB cada</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",fontWeight:700,color:"#0E0C09"}}>Fotos do serviço</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#5A5044",marginTop:2}}>Até 5 fotos · JPG, PNG ou WebP · máx 5MB cada</div>
                   </div>
                   {(form.photos||[]).length<5&&(
                     <button onClick={()=>photoRef.current.click()} className="btn btn-ghost"
-                      style={{padding:"8px 16px",borderRadius:8,fontSize:"var(--t-xs)"}}>
+                      style={{padding:"8px 16px",borderRadius:8,fontSize:".75rem"}}>
                       📷 Adicionar
                     </button>
                   )}
@@ -1274,23 +1279,23 @@
 
                 {(form.photos||[]).length===0?(
                   <div onClick={()=>photoRef.current.click()}
-                    style={{border:"2px dashed var(--stone2)",borderRadius:10,padding:"32px",textAlign:"center",cursor:"pointer",transition:"all .2s"}}
-                    onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--gold)";e.currentTarget.style.background="var(--gold-bg)";}}
-                    onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--stone2)";e.currentTarget.style.background="transparent";}}>
+                    style={{border:"2px dashed #C4BAB0",borderRadius:10,padding:"32px",textAlign:"center",cursor:"pointer",transition:"all .2s"}}
+                    onMouseEnter={e=>{e.currentTarget.style.borderColor="#9A6D1F";e.currentTarget.style.background="#FBF6EE";}}
+                    onMouseLeave={e=>{e.currentTarget.style.borderColor="#C4BAB0";e.currentTarget.style.background="transparent";}}>
                     <div style={{fontSize:"2rem",marginBottom:8}}>📷</div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-sm)",color:"var(--muted2)",fontWeight:500}}>Arraste ou clique para adicionar fotos</div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:"var(--t-xs)",color:"var(--muted)",marginTop:4}}>A primeira foto será exibida como capa do serviço</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".875rem",color:"#3A342A",fontWeight:500}}>Arraste ou clique para adicionar fotos</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#5A5044",marginTop:4}}>A primeira foto será exibida como capa do serviço</div>
                   </div>
                 ):(
                   <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(90px,1fr))",gap:10}}>
                     {(form.photos||[]).map((ph,phIdx)=>(
                       <div key={ph.id} style={{position:"relative",aspectRatio:"1",borderRadius:10,overflow:"hidden",
-                        border:`2px solid ${phIdx===0?"var(--gold)":"var(--stone)"}`,
-                        boxShadow:phIdx===0?"0 0 0 3px var(--gold-ring)":"none"}}>
+                        border:`2px solid ${phIdx===0?"#9A6D1F":"#DDD5CA"}`,
+                        boxShadow:phIdx===0?"0 0 0 3px rgba(154,109,31,.2)":"none"}}>
                         <img src={ph.preview} alt="" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} />
                         {phIdx===0&&(
-                          <div style={{position:"absolute",top:5,left:5,background:"var(--gold)",color:"#fff",
-                            fontFamily:"var(--font-sans)",fontSize:".55rem",padding:"2px 7px",borderRadius:4,
+                          <div style={{position:"absolute",top:5,left:5,background:"#9A6D1F",color:"#fff",
+                            fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".55rem",padding:"2px 7px",borderRadius:4,
                             fontWeight:700,letterSpacing:"1px"}}>CAPA</div>
                         )}
                         <div style={{position:"absolute",inset:0,background:"rgba(14,12,9,0)",display:"flex",alignItems:"flex-end",justifyContent:"center",
@@ -1311,13 +1316,13 @@
                     ))}
                     {(form.photos||[]).length<5&&(
                       <div onClick={()=>photoRef.current.click()}
-                        style={{aspectRatio:"1",borderRadius:10,border:"2px dashed var(--stone2)",
+                        style={{aspectRatio:"1",borderRadius:10,border:"2px dashed #C4BAB0",
                         display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
                         cursor:"pointer",gap:4,transition:"all .2s"}}
-                        onMouseEnter={e=>{e.currentTarget.style.borderColor="var(--gold)";e.currentTarget.style.background="var(--gold-bg)";}}
-                        onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--stone2)";e.currentTarget.style.background="transparent";}}>
+                        onMouseEnter={e=>{e.currentTarget.style.borderColor="#9A6D1F";e.currentTarget.style.background="#FBF6EE";}}
+                        onMouseLeave={e=>{e.currentTarget.style.borderColor="#C4BAB0";e.currentTarget.style.background="transparent";}}>
                         <span style={{fontSize:"1.3rem"}}>+</span>
-                        <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",fontWeight:500}}>foto</span>
+                        <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044",fontWeight:500}}>foto</span>
                       </div>
                     )}
                   </div>
@@ -1328,11 +1333,11 @@
               {/* Actions */}
               <div style={{display:"flex",gap:12}}>
                 <button onClick={resetForm} className="btn btn-ghost"
-                  style={{flex:1,padding:"14px",borderRadius:10,fontSize:"var(--t-sm)"}}>
+                  style={{flex:1,padding:"14px",borderRadius:10,fontSize:".875rem"}}>
                   Cancelar
                 </button>
                 <button onClick={save} className="btn btn-primary"
-                  style={{flex:2,padding:"14px",borderRadius:10,fontSize:"var(--t-xs)",letterSpacing:"2px",
+                  style={{flex:2,padding:"14px",borderRadius:10,fontSize:".75rem",letterSpacing:"2px",
                   display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
                   <span>✓</span> SALVAR SERVIÇO
                 </button>
@@ -1368,27 +1373,27 @@
         resetForm(); showToast(editId?"Produto atualizado ✓":"Produto adicionado ✓","success");
       };
       return(
-        <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:14,padding:"20px",marginBottom:20}}>
+        <div style={{background:"#fff",border:"1px solid #DDD5CA",borderRadius:14,padding:"20px",marginBottom:20}}>
           <SectionHeader title="Produtos" icon="📦" count={products.length} onAdd={()=>{resetForm();setAdding(true);}} />
           {products.length===0&&!adding&&<EmptyState icon="📦" text="Nenhum produto ainda" sub="Adicione os produtos que você vende" />}
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:12,marginBottom:adding?16:0}}>
             {products.map(p=>(
-              <div key={p.id} style={{background:"var(--cream)",borderRadius:10,border:"1px solid var(--stone)",overflow:"hidden"}}>
+              <div key={p.id} style={{background:"#F8F5F0",borderRadius:10,border:"1px solid #DDD5CA",overflow:"hidden"}}>
                 {p.photoPreview&&<div style={{height:80,overflow:"hidden"}}><img src={p.photoPreview} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover"}} /></div>}
                 <div style={{padding:"10px"}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".78rem",fontWeight:500,marginBottom:2}}>{p.name}</div>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",marginBottom:8}}>{p.brand&&`${p.brand} · `}R$ {parseFloat(p.price||0).toFixed(2)}</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",fontWeight:500,marginBottom:2}}>{p.name}</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044",marginBottom:8}}>{p.brand&&`${p.brand} · `}R$ {parseFloat(p.price||0).toFixed(2)}</div>
                   <div style={{display:"flex",gap:6}}>
-                    <button onClick={()=>edit(p)} className="btn" style={{flex:1,padding:"5px",borderRadius:5,border:"1px solid var(--stone)",background:"var(--cream)",fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted2)"}}>Editar</button>
-                    <button onClick={()=>remove(p.id)} className="btn" style={{flex:1,padding:"5px",borderRadius:5,border:"1px solid #F4D0C8",background:"#FFF5F3",fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--red)"}}>Remover</button>
+                    <button onClick={()=>edit(p)} className="btn" style={{flex:1,padding:"5px",borderRadius:5,border:"1px solid #DDD5CA",background:"#F8F5F0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#3A342A"}}>Editar</button>
+                    <button onClick={()=>remove(p.id)} className="btn" style={{flex:1,padding:"5px",borderRadius:5,border:"1px solid #F4D0C8",background:"#FFF5F3",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#A83220"}}>Remover</button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
           {adding&&(
-            <div className="fade-up" style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:14,padding:"20px",marginTop:8}}>
-              <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:16}}>{editId?"EDITAR":"NOVO PRODUTO"}</div>
+            <div className="fade-up" style={{background:"#fff",border:"1px solid #DDD5CA",borderRadius:14,padding:"20px",marginTop:8}}>
+              <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2px",color:"#5A5044",marginBottom:16}}>{editId?"EDITAR":"NOVO PRODUTO"}</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
                 <Field label="Nome *"><input className="inp" value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} placeholder="Ex: Shampoo Hidra" /></Field>
                 <Field label="Marca"><input className="inp" value={form.brand} onChange={e=>setForm(p=>({...p,brand:e.target.value}))} placeholder="Ex: L&apos;Oréal" /></Field>
@@ -1406,14 +1411,14 @@
                 <div onClick={()=>fileRef.current.click()} className="drop-zone" style={{padding:"16px",height:form.photoPreview?120:70,display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
                   {form.photoPreview
                     ?<img src={form.photoPreview} alt="preview" style={{maxHeight:"100%",maxWidth:"100%",objectFit:"contain",borderRadius:8}} />
-                    :<span style={{fontFamily:"var(--font-sans)",fontSize:".75rem",color:"var(--muted)"}}>📷 Clique para adicionar foto</span>
+                    :<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#5A5044"}}>📷 Clique para adicionar foto</span>
                   }
                 </div>
                 <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhoto} style={{display:"none"}} />
               </Field>
               <div style={{display:"flex",gap:10,marginTop:16}}>
-                <button onClick={resetForm} className="btn" style={{flex:1,padding:"10px",borderRadius:8,border:"1px solid var(--stone2)",background:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem",color:"var(--muted2)"}}>Cancelar</button>
-                <button onClick={save} className="btn" style={{flex:2,padding:"10px",borderRadius:8,background:"var(--blue)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem",letterSpacing:"1px"}}>SALVAR</button>
+                <button onClick={resetForm} className="btn" style={{flex:1,padding:"10px",borderRadius:8,border:"1px solid #C4BAB0",background:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:"#3A342A"}}>Cancelar</button>
+                <button onClick={save} className="btn" style={{flex:2,padding:"10px",borderRadius:8,background:"#1A5F96",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",letterSpacing:"1px"}}>SALVAR</button>
               </div>
             </div>
           )}
@@ -1508,19 +1513,19 @@
       };
 
       return (
-        <div style={{display:"flex",minHeight:"100vh",background:"var(--cream)"}}>
+        <div style={{display:"flex",minHeight:"100vh",background:"#F8F5F0"}}>
           {/* Sidebar */}
-          <aside style={{width:220,background:"#fff",borderRight:"1px solid var(--stone)",padding:"24px 16px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0}}>
-            <div style={{fontFamily:"var(--font-serif)",fontSize:"1.3rem",display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
-              Beleza <em style={{color:"var(--gold)"}}>Já</em>
-              <span style={{fontFamily:"var(--font-sans)",fontSize:".55rem",letterSpacing:"2px",background:"var(--ink)",color:"var(--gold)",padding:"2px 7px",borderRadius:4}}>ADMIN</span>
+          <aside style={{width:220,background:"#fff",borderRight:"1px solid #DDD5CA",padding:"24px 16px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0}}>
+            <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.3rem",display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+              Beleza <em style={{color:"#9A6D1F"}}>Já</em>
+              <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".55rem",letterSpacing:"2px",background:"#0E0C09",color:"#9A6D1F",padding:"2px 7px",borderRadius:4}}>ADMIN</span>
             </div>
-            <button onClick={onBack} className="btn" style={{marginBottom:24,fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted)",background:"transparent",padding:"4px 0"}}>← Voltar</button>
+            <button onClick={onBack} className="btn" style={{marginBottom:24,fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#5A5044",background:"transparent",padding:"4px 0"}}>← Voltar</button>
             {Object.entries(STATUS_META).map(([s,m])=>(
               <button key={s} onClick={()=>{setFilter(s);setSel(null);}} className="btn" style={{
                 width:"100%",padding:"10px 12px",borderRadius:8,
-                display:"flex",alignItems:"center",gap:8,fontFamily:"var(--font-sans)",fontSize:".78rem",
-                background:filter===s?"var(--cream)":"transparent",color:"var(--ink)",
+                display:"flex",alignItems:"center",gap:8,fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",
+                background:filter===s?"#F8F5F0":"transparent",color:"#0E0C09",
                 marginBottom:4,textAlign:"left",
                 borderLeft:`3px solid ${filter===s?m.color:"transparent"}`,
               }}>
@@ -1532,37 +1537,37 @@
 
           {/* List */}
           <main style={{flex:1,padding:"32px",minWidth:0}}>
-            <h1 style={{fontFamily:"var(--font-serif)",fontSize:"1.8rem",fontWeight:300,marginBottom:24,display:"flex",alignItems:"center",gap:10}}>
+            <h1 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.8rem",fontWeight:300,marginBottom:24,display:"flex",alignItems:"center",gap:10}}>
               {STATUS_META[filter].label}
               <span style={{fontSize:".65rem",padding:"3px 10px",borderRadius:10,background:STATUS_META[filter].bg,color:STATUS_META[filter].color,fontWeight:600}}>{counts[filter]??0}</span>
             </h1>
             {loading?<div style={{textAlign:"center",padding:60}}><div style={{width:32,height:32,border:"3px solid #EDE9E2",borderTopColor:"#C9A96E",borderRadius:"50%",animation:"spin .7s linear infinite",margin:"0 auto"}} /></div>
-            :items.length===0?<div style={{textAlign:"center",padding:"60px 24px",color:"var(--muted)"}}>
+            :items.length===0?<div style={{textAlign:"center",padding:"60px 24px",color:"#5A5044"}}>
                 <div style={{fontSize:"2.5rem",marginBottom:12}}>📭</div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"1.2rem"}}>Nenhum cadastro {STATUS_META[filter].label.toLowerCase()}</div>
+                <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.2rem"}}>Nenhum cadastro {STATUS_META[filter].label.toLowerCase()}</div>
               </div>
             :<div style={{display:"flex",flexDirection:"column",gap:10}}>
               {items.map(item=>(
                 <div key={item.id} onClick={()=>setSel(s=>s?.id===item.id?null:item)} style={{
-                  background:sel?.id===item.id?"var(--gold-bg)":"#fff",
+                  background:sel?.id===item.id?"#FBF6EE":"#fff",
                   border:`1px solid ${sel?.id===item.id?"#C9A96E":"#EDE9E2"}`,
                   borderRadius:12,padding:"16px 20px",cursor:"pointer",transition:"all .18s",
                   boxShadow:sel?.id===item.id?"0 0 0 3px rgba(201,169,110,.15)":"none",
                 }}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
                     <div>
-                      <div style={{fontFamily:"var(--font-serif)",fontSize:"1.1rem",marginBottom:2}}>{item.businessName||"—"}</div>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted)"}}>{item.cnpj} · {item.city}/{item.state}</div>
+                      <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.1rem",marginBottom:2}}>{item.businessName||"—"}</div>
+                      <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#5A5044"}}>{item.cnpj} · {item.city}/{item.state}</div>
                     </div>
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",padding:"3px 10px",borderRadius:12,background:STATUS_META[item.status]?.bg,color:STATUS_META[item.status]?.color,fontWeight:600,whiteSpace:"nowrap"}}>
+                    <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",padding:"3px 10px",borderRadius:12,background:STATUS_META[item.status]?.bg,color:STATUS_META[item.status]?.color,fontWeight:600,whiteSpace:"nowrap"}}>
                       {STATUS_META[item.status]?.label}
                     </span>
                   </div>
                   <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
-                    {item.cnpjVerified&&<span style={{fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"var(--green)",border:"1px solid #5BAA5B30"}}>CNPJ ✓</span>}
-                    {item.emailVerified&&<span style={{fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"var(--green)",border:"1px solid #5BAA5B30"}}>E-mail ✓</span>}
-                    {item.phoneVerified&&<span style={{fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"var(--green)",border:"1px solid #5BAA5B30"}}>Tel ✓</span>}
-                    {item.ownerDocUrl&&<span style={{fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"var(--green)",border:"1px solid #5BAA5B30"}}>Doc ✓</span>}
+                    {item.cnpjVerified&&<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#1E6B22",border:"1px solid #5BAA5B30"}}>CNPJ ✓</span>}
+                    {item.emailVerified&&<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#1E6B22",border:"1px solid #5BAA5B30"}}>E-mail ✓</span>}
+                    {item.phoneVerified&&<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#1E6B22",border:"1px solid #5BAA5B30"}}>Tel ✓</span>}
+                    {item.ownerDocUrl&&<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#1E6B22",border:"1px solid #5BAA5B30"}}>Doc ✓</span>}
                   </div>
                 </div>
               ))}
@@ -1571,10 +1576,10 @@
 
           {/* Detail panel */}
           {sel&&(
-            <aside style={{width:340,background:"#fff",borderLeft:"1px solid var(--stone)",padding:"24px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0}}>
+            <aside style={{width:340,background:"#fff",borderLeft:"1px solid #DDD5CA",padding:"24px",position:"sticky",top:0,height:"100vh",overflowY:"auto",flexShrink:0}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
-                <h2 style={{fontFamily:"var(--font-serif)",fontSize:"1.2rem",fontWeight:400,flex:1,marginRight:8}}>{sel.businessName}</h2>
-                <button onClick={()=>setSel(null)} className="btn" style={{background:"transparent",border:"1px solid var(--stone)",borderRadius:6,padding:"4px 10px",color:"var(--muted)",fontSize:".8rem"}}>✕</button>
+                <h2 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.2rem",fontWeight:400,flex:1,marginRight:8}}>{sel.businessName}</h2>
+                <button onClick={()=>setSel(null)} className="btn" style={{background:"transparent",border:"1px solid #DDD5CA",borderRadius:6,padding:"4px 10px",color:"#5A5044",fontSize:".8rem"}}>✕</button>
               </div>
               {[
                 {t:"Empresa",rows:[["CNPJ",sel.cnpj],["E-mail",sel.email],["Telefone",sel.phone],["CNPJ ✓",sel.cnpjVerified?"✅ Sim":"❌ Não"],["E-mail ✓",sel.emailVerified?"✅ Sim":"❌ Não"],["Telefone ✓",sel.phoneVerified?"✅ Sim":"❌ Não"]]},
@@ -1582,11 +1587,11 @@
                 {t:"Responsável",rows:[["Nome",sel.ownerName],["CPF",sel.ownerCPF],["E-mail",sel.ownerEmail]]},
               ].map(({t,rows})=>(
                 <div key={t} style={{marginBottom:16}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".6rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:6}}>{t.toUpperCase()}</div>
-                  <div style={{background:"var(--cream)",borderRadius:8,padding:"10px 14px"}}>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",letterSpacing:"2px",color:"#5A5044",marginBottom:6}}>{t.toUpperCase()}</div>
+                  <div style={{background:"#F8F5F0",borderRadius:8,padding:"10px 14px"}}>
                     {rows.map(([l,v])=>(
-                      <div key={l} style={{display:"flex",gap:8,fontFamily:"var(--font-sans)",fontSize:".72rem",marginBottom:3}}>
-                        <span style={{color:"var(--muted)",minWidth:80}}>{l}</span>
+                      <div key={l} style={{display:"flex",gap:8,fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",marginBottom:3}}>
+                        <span style={{color:"#5A5044",minWidth:80}}>{l}</span>
                         <span style={{wordBreak:"break-all"}}>{v||"—"}</span>
                       </div>
                     ))}
@@ -1595,20 +1600,20 @@
               ))}
               {/* Documentos */}
               <div style={{marginBottom:16}}>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".6rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:6}}>DOCUMENTOS</div>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",letterSpacing:"2px",color:"#5A5044",marginBottom:6}}>DOCUMENTOS</div>
                 {[["ownerDocUrl","Doc. Responsável"],["addressProofUrl","Comp. Endereço"],["cnpjDocUrl","Cartão CNPJ"]].map(([field,label])=>(
                   sel[field]
-                    ?<a key={field} href={sel[field]} target="_blank" rel="noreferrer" style={{display:"block",fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--gold)",textDecoration:"none",padding:"6px 10px",background:"var(--gold-bg)",borderRadius:6,border:"1px solid #F0D99A",marginBottom:4}}>📄 {label}</a>
-                    :<div key={field} style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"#B0A898",marginBottom:4}}>❌ {label} — não enviado</div>
+                    ?<a key={field} href={sel[field]} target="_blank" rel="noreferrer" style={{display:"block",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#9A6D1F",textDecoration:"none",padding:"6px 10px",background:"#FBF6EE",borderRadius:6,border:"1px solid #F0D99A",marginBottom:4}}>📄 {label}</a>
+                    :<div key={field} style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#B0A898",marginBottom:4}}>❌ {label} — não enviado</div>
                 ))}
               </div>
               {/* Ações */}
-              <label style={{display:"block",fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted)",marginBottom:6}}>Observação</label>
+              <label style={{display:"block",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#5A5044",marginBottom:6}}>Observação</label>
               <textarea value={note} onChange={e=>setNote(e.target.value)} placeholder="Motivo da rejeição / bloqueio..." className="inp" style={{marginBottom:12,minHeight:64}} />
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {sel.status!=="approved"&&<button onClick={()=>doAction("approved")} disabled={busy} className="btn" style={{flex:1,padding:"9px",borderRadius:8,background:"var(--green)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".72rem"}}>✅ Aprovar</button>}
-                {sel.status!=="rejected"&&<button onClick={()=>doAction("rejected")} disabled={busy} className="btn" style={{flex:1,padding:"9px",borderRadius:8,background:"var(--red)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".72rem"}}>❌ Rejeitar</button>}
-                {sel.status!=="blocked"&&<button onClick={()=>doAction("blocked")} disabled={busy} className="btn" style={{flex:1,padding:"9px",borderRadius:8,background:"#9A3030",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".72rem"}}>🚫 Bloquear</button>}
+                {sel.status!=="approved"&&<button onClick={()=>doAction("approved")} disabled={busy} className="btn" style={{flex:1,padding:"9px",borderRadius:8,background:"#1E6B22",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem"}}>✅ Aprovar</button>}
+                {sel.status!=="rejected"&&<button onClick={()=>doAction("rejected")} disabled={busy} className="btn" style={{flex:1,padding:"9px",borderRadius:8,background:"#A83220",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem"}}>❌ Rejeitar</button>}
+                {sel.status!=="blocked"&&<button onClick={()=>doAction("blocked")} disabled={busy} className="btn" style={{flex:1,padding:"9px",borderRadius:8,background:"#9A3030",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem"}}>🚫 Bloquear</button>}
               </div>
             </aside>
           )}
@@ -1664,29 +1669,29 @@
         <div onClick={onClose} style={{position:"fixed",inset:0,background:"rgba(26,23,21,.7)",zIndex:9000,display:"flex",alignItems:"center",justifyContent:"center",padding:16}}>
           <div onClick={e=>e.stopPropagation()} className="fade-up" style={{background:"#fff",borderRadius:16,padding:"32px 28px",width:"100%",maxWidth:380,boxShadow:"0 24px 64px rgba(0,0,0,.3)"}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24}}>
-              <div style={{fontFamily:"var(--font-serif)",fontSize:"1.5rem",fontWeight:300}}>
+              <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.5rem",fontWeight:300}}>
                 {mode==="reset" ? "Redefinir senha" : "Entrar na conta"}
               </div>
-              <button onClick={onClose} className="btn" style={{background:"transparent",border:"1px solid var(--stone)",borderRadius:8,padding:"4px 10px",color:"var(--muted)",fontSize:".85rem"}}>✕</button>
+              <button onClick={onClose} className="btn" style={{background:"transparent",border:"1px solid #DDD5CA",borderRadius:8,padding:"4px 10px",color:"#5A5044",fontSize:".85rem"}}>✕</button>
             </div>
             {mode==="reset" && resetSent ? (
               <div style={{textAlign:"center",padding:"16px 0"}}>
                 <div style={{fontSize:"2rem",marginBottom:12}}>📧</div>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",lineHeight:1.7}}>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",color:"#3A342A",lineHeight:1.7}}>
                   Enviamos um link para <strong>{email}</strong>.<br/>Verifique sua caixa de entrada.
                 </div>
-                <button onClick={()=>{setMode("login");setResetSent(false);}} className="btn" style={{marginTop:20,padding:"9px 24px",borderRadius:8,background:"var(--ink)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem"}}>← Voltar ao login</button>
+                <button onClick={()=>{setMode("login");setResetSent(false);}} className="btn" style={{marginTop:20,padding:"9px 24px",borderRadius:8,background:"#0E0C09",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem"}}>← Voltar ao login</button>
               </div>
             ) : (
               <>
                 <div style={{display:"flex",flexDirection:"column",gap:14,marginBottom:20}}>
                   <div>
-                    <label style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted2)",display:"block",marginBottom:6}}>E-mail</label>
+                    <label style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#3A342A",display:"block",marginBottom:6}}>E-mail</label>
                     <input className="inp" type="email" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&(mode==="login"?doLogin():doReset())} placeholder="seu@email.com" autoFocus />
                   </div>
                   {mode==="login" && (
                     <div>
-                      <label style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted2)",display:"block",marginBottom:6}}>Senha</label>
+                      <label style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#3A342A",display:"block",marginBottom:6}}>Senha</label>
                       <div className="pass-wrap">
                         <input className="inp" type={showPw?"text":"password"} value={password} onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==="Enter"&&doLogin()} placeholder="Sua senha" style={{paddingRight:36}} />
                         <span className="pass-eye" onClick={()=>setShowPw(p=>!p)}>{showPw?"🙈":"👁️"}</span>
@@ -1694,15 +1699,15 @@
                     </div>
                   )}
                 </div>
-                <button onClick={mode==="login"?doLogin:doReset} disabled={loading} className="btn" style={{width:"100%",padding:"12px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"1.5px",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+                <button onClick={mode==="login"?doLogin:doReset} disabled={loading} className="btn" style={{width:"100%",padding:"12px",borderRadius:8,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",letterSpacing:"1.5px",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
                   {loading&&<span className="spinner" />}
                   {mode==="login" ? "ENTRAR" : "ENVIAR LINK"}
                 </button>
                 <div style={{display:"flex",justifyContent:"space-between",marginTop:14}}>
                   {mode==="login" ? (
-                    <button onClick={()=>setMode("reset")} className="btn" style={{background:"transparent",fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",padding:0}}>Esqueci a senha</button>
+                    <button onClick={()=>setMode("reset")} className="btn" style={{background:"transparent",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",padding:0}}>Esqueci a senha</button>
                   ) : (
-                    <button onClick={()=>setMode("login")} className="btn" style={{background:"transparent",fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",padding:0}}>← Voltar</button>
+                    <button onClick={()=>setMode("login")} className="btn" style={{background:"transparent",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",padding:0}}>← Voltar</button>
                   )}
                 </div>
               </>
@@ -1782,8 +1787,8 @@
           <div style={{background:"linear-gradient(160deg,#1A1715 0%,#2C2420 60%,#1A1715 100%)",padding:"56px 24px 48px",position:"relative",overflow:"hidden"}}>
             <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 20% 60%,rgba(201,169,110,.13) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(201,169,110,.07) 0%,transparent 40%)"}} />
             <div style={{position:"relative",maxWidth:720,margin:"0 auto",textAlign:"center"}}>
-              <span style={{fontFamily:"var(--font-sans)",fontSize:".62rem",letterSpacing:"5px",color:"var(--gold)"}}>ENCONTRE SEU SALÃO IDEAL</span>
-              <h1 style={{fontFamily:"var(--font-serif)",fontSize:"clamp(2rem,5vw,3.2rem)",color:"#F7F5F0",fontWeight:300,lineHeight:1.15,margin:"16px 0 32px"}}>
+              <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".62rem",letterSpacing:"5px",color:"#9A6D1F"}}>ENCONTRE SEU SALÃO IDEAL</span>
+              <h1 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"clamp(2rem,5vw,3.2rem)",color:"#F7F5F0",fontWeight:300,lineHeight:1.15,margin:"16px 0 32px"}}>
                 Salões perto de você
               </h1>
               {/* Search bar */}
@@ -1794,16 +1799,16 @@
                   onChange={e=>setQuery(e.target.value)}
                   onKeyDown={e=>e.key==="Enter"&&doSearch()}
                   placeholder="Salão, serviço ou especialidade..."
-                  style={{flex:1,border:"none",outline:"none",fontFamily:"var(--font-sans)",fontSize:".88rem",color:"var(--ink)",background:"transparent"}}
+                  style={{flex:1,border:"none",outline:"none",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".88rem",color:"#0E0C09",background:"transparent"}}
                 />
                 <input
                   value={cityFilter}
                   onChange={e=>setCityFilter(e.target.value)}
                   onKeyDown={e=>e.key==="Enter"&&doSearch()}
                   placeholder="Cidade ou estado"
-                  style={{width:180,border:"none",borderLeft:"1px solid var(--stone)",paddingLeft:12,outline:"none",fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--ink)",background:"transparent"}}
+                  style={{width:180,border:"none",borderLeft:"1px solid #DDD5CA",paddingLeft:12,outline:"none",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",color:"#0E0C09",background:"transparent"}}
                 />
-                <button onClick={doSearch} className="btn" style={{padding:"10px 22px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".8rem",letterSpacing:"1.5px",fontWeight:500,whiteSpace:"nowrap"}}>
+                <button onClick={doSearch} className="btn" style={{padding:"10px 22px",borderRadius:8,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".8rem",letterSpacing:"1.5px",fontWeight:500,whiteSpace:"nowrap"}}>
                   BUSCAR
                 </button>
               </div>
@@ -1811,10 +1816,10 @@
               <div style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"center"}}>
                 {SERVICE_FILTERS.map(f=>(
                   <button key={f} onClick={()=>{setSvcFilter(f); doSearch(f);}} className="btn" style={{
-                    padding:"5px 14px",borderRadius:20,fontFamily:"var(--font-sans)",fontSize:".68rem",
-                    background:svcFilter===f?"var(--gold)":"rgba(255,255,255,.08)",
+                    padding:"5px 14px",borderRadius:20,fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",
+                    background:svcFilter===f?"#9A6D1F":"rgba(255,255,255,.08)",
                     color:svcFilter===f?"#fff":"rgba(255,255,255,.65)",
-                    border:`1px solid ${svcFilter===f?"var(--gold)":"rgba(255,255,255,.18)"}`,
+                    border:`1px solid ${svcFilter===f?"#9A6D1F":"rgba(255,255,255,.18)"}`,
                     letterSpacing:"0.5px",
                   }}>{f}</button>
                 ))}
@@ -1827,21 +1832,21 @@
             {/* Continue registration banner */}
             {authUser&&hasDraft&&(
               <div className="fade-up" style={{background:"#FFF8ED",border:"1px solid #F0D99A",borderRadius:10,padding:"12px 16px",marginBottom:20,display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-                <span style={{fontFamily:"var(--font-sans)",fontSize:".78rem",color:"#7A6020"}}>☁️ Você tem um cadastro em andamento. Continuar de onde parou?</span>
-                <button onClick={onRestoreDraft} className="btn" style={{padding:"6px 16px",borderRadius:6,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".75rem",whiteSpace:"nowrap"}}>Continuar cadastro</button>
+                <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:"#7A6020"}}>☁️ Você tem um cadastro em andamento. Continuar de onde parou?</span>
+                <button onClick={onRestoreDraft} className="btn" style={{padding:"6px 16px",borderRadius:6,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",whiteSpace:"nowrap"}}>Continuar cadastro</button>
               </div>
             )}
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20,flexWrap:"wrap",gap:10}}>
-              <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",letterSpacing:"2px"}}>
+              <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",letterSpacing:"2px"}}>
                 {loading ? "BUSCANDO..." : searched ? `${salons.length} RESULTADO${salons.length!==1?"S":""} ENCONTRADO${salons.length!==1?"S":""}` : "DESTAQUES"}
               </div>
               <div style={{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}}>
-                <select value={sortBy} onChange={e=>{setSortBy(e.target.value);setPage(1);}} style={{fontFamily:"var(--font-sans)",fontSize:".68rem",border:"1px solid var(--stone2)",borderRadius:6,padding:"5px 10px",background:"#fff",color:"var(--ink)",outline:"none"}}>
+                <select value={sortBy} onChange={e=>{setSortBy(e.target.value);setPage(1);}} style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",border:"1px solid #C4BAB0",borderRadius:6,padding:"5px 10px",background:"#fff",color:"#0E0C09",outline:"none"}}>
                   <option value="rating">Melhor avaliação</option>
                   <option value="name">Nome A–Z</option>
                   <option value="newest">Mais recentes</option>
                 </select>
-                <button onClick={onRegister} className="btn" style={{padding:"7px 16px",borderRadius:8,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".68rem",letterSpacing:"1.5px"}}>
+                <button onClick={onRegister} className="btn" style={{padding:"7px 16px",borderRadius:8,background:"#0E0C09",color:"#F7F5F0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",letterSpacing:"1.5px"}}>
                   + CADASTRAR MEU SALÃO
                 </button>
               </div>
@@ -1850,7 +1855,7 @@
             {loading && (
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:16}}>
                 {[1,2,3,4,5,6].map(i=>(
-                  <div key={i} style={{background:"#fff",borderRadius:14,padding:"20px",border:"1px solid var(--stone)"}}>
+                  <div key={i} style={{background:"#fff",borderRadius:14,padding:"20px",border:"1px solid #DDD5CA"}}>
                     <div className="skeleton" style={{height:18,width:"70%",marginBottom:10}} />
                     <div className="skeleton" style={{height:12,width:"50%",marginBottom:16}} />
                     <div className="skeleton" style={{height:10,width:"90%",marginBottom:6}} />
@@ -1863,9 +1868,9 @@
             {!loading && salons.length === 0 && searched && (
               <div style={{textAlign:"center",padding:"64px 24px"}}>
                 <div style={{fontSize:"2.5rem",marginBottom:12}}>🔍</div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"1.4rem",color:"var(--muted2)",marginBottom:8}}>Nenhum resultado encontrado</div>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".78rem",color:"var(--muted)",marginBottom:24}}>Tente outros termos ou seja o primeiro a cadastrar nessa região.</div>
-                <button onClick={onRegister} className="btn" style={{padding:"11px 28px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".8rem",letterSpacing:"2px"}}>CADASTRAR MEU SALÃO</button>
+                <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.4rem",color:"#3A342A",marginBottom:8}}>Nenhum resultado encontrado</div>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:"#5A5044",marginBottom:24}}>Tente outros termos ou seja o primeiro a cadastrar nessa região.</div>
+                <button onClick={onRegister} className="btn" style={{padding:"11px 28px",borderRadius:8,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".8rem",letterSpacing:"2px"}}>CADASTRAR MEU SALÃO</button>
               </div>
             )}
 
@@ -1874,35 +1879,35 @@
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(265px,1fr))",gap:16}}>
                 {pagedSalons.map((s,i)=>(
                   <div key={s.id} className="hov fade-up" onClick={()=>setSelected(sel=>sel?.id===s.id?null:s)}
-                    style={{background:"#fff",borderRadius:14,padding:"20px",border:`1px solid ${selected?.id===s.id?"var(--gold)":"var(--stone)"}`,
-                    boxShadow:selected?.id===s.id?"0 0 0 3px rgba(201,169,110,.18)":"var(--shadow-sm)",
+                    style={{background:"#fff",borderRadius:14,padding:"20px",border:`1px solid ${selected?.id===s.id?"#9A6D1F":"#DDD5CA"}`,
+                    boxShadow:selected?.id===s.id?"0 0 0 3px rgba(201,169,110,.18)":"0 2px 8px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.05)",
                     borderTop:`3px solid ${s.color}`,cursor:"pointer",animationDelay:`${i*.06}s`,transition:"all .22s"}}>
                     <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
                       <div>
-                        <div style={{fontFamily:"var(--font-serif)",fontSize:"1.1rem",fontWeight:400,marginBottom:2}}>{s.name}</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",letterSpacing:".5px"}}>{s.type}</div>
+                        <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.1rem",fontWeight:400,marginBottom:2}}>{s.name}</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044",letterSpacing:".5px"}}>{s.type}</div>
                       </div>
-                      {s.verified && <span style={{fontFamily:"var(--font-sans)",fontSize:".55rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#5BAA5B",border:"1px solid #5BAA5B30",whiteSpace:"nowrap"}}>✓ VERIFICADO</span>}
+                      {s.verified && <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".55rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#5BAA5B",border:"1px solid #5BAA5B30",whiteSpace:"nowrap"}}>✓ VERIFICADO</span>}
                     </div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".7rem",color:"var(--gold)",marginBottom:8,letterSpacing:".3px"}}>
-                      {stars(s.rating)} <span style={{color:"var(--muted)",fontSize:".65rem"}}>{s.rating} ({s.reviews} avaliações)</span>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".7rem",color:"#9A6D1F",marginBottom:8,letterSpacing:".3px"}}>
+                      {stars(s.rating)} <span style={{color:"#5A5044",fontSize:".65rem"}}>{s.rating} ({s.reviews} avaliações)</span>
                     </div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted2)",marginBottom:10}}>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#3A342A",marginBottom:10}}>
                       📍 {s.city}, {s.state}
                     </div>
                     <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
                       {s.services.map(sv=>(
-                        <span key={sv} style={{fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"var(--cream)",color:"var(--muted2)",border:"1px solid var(--stone)"}}>
+                        <span key={sv} style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#F8F5F0",color:"#3A342A",border:"1px solid #DDD5CA"}}>
                           {sv}
                         </span>
                       ))}
                     </div>
                     {selected?.id===s.id && (
-                      <div className="fade-up" style={{marginTop:14,paddingTop:14,borderTop:"1px solid var(--stone)"}}>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted)",marginBottom:10}}>Entre em contato ou agende pelo perfil completo.</div>
+                      <div className="fade-up" style={{marginTop:14,paddingTop:14,borderTop:"1px solid #DDD5CA"}}>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#5A5044",marginBottom:10}}>Entre em contato ou agende pelo perfil completo.</div>
                         <div style={{display:"flex",gap:8}}>
-                          <button onClick={e=>{e.stopPropagation();showToast("Perfil completo em breve!","info");}} className="btn" style={{flex:1,padding:"8px",borderRadius:7,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".72rem"}}>Ver Perfil</button>
-                          <button onClick={e=>{e.stopPropagation();showToast("Agendamento em breve!","info");}} className="btn" style={{flex:1,padding:"8px",borderRadius:7,background:"var(--ink)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".72rem"}}>Agendar</button>
+                          <button onClick={e=>{e.stopPropagation();showToast("Perfil completo em breve!","info");}} className="btn" style={{flex:1,padding:"8px",borderRadius:7,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem"}}>Ver Perfil</button>
+                          <button onClick={e=>{e.stopPropagation();showToast("Agendamento em breve!","info");}} className="btn" style={{flex:1,padding:"8px",borderRadius:7,background:"#0E0C09",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem"}}>Agendar</button>
                         </div>
                       </div>
                     )}
@@ -1912,7 +1917,7 @@
 
               {hasMore && (
                 <div style={{textAlign:"center",marginTop:16}}>
-                  <button onClick={()=>setPage(p=>p+1)} className="btn" style={{padding:"10px 32px",borderRadius:8,border:"1px solid var(--stone2)",background:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem",color:"var(--muted2)"}}>
+                  <button onClick={()=>setPage(p=>p+1)} className="btn" style={{padding:"10px 32px",borderRadius:8,border:"1px solid #C4BAB0",background:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:"#3A342A"}}>
                     Ver mais {Math.min(PAGE_SIZE, sortedSalons.length-pagedSalons.length)} salões
                   </button>
                 </div>
@@ -1924,13 +1929,13 @@
             <div style={{marginTop:48,background:"linear-gradient(135deg,#1A1715,#2C2420)",borderRadius:16,padding:"32px",textAlign:"center",position:"relative",overflow:"hidden"}}>
               <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 80% 50%,rgba(201,169,110,.1) 0%,transparent 60%)"}} />
               <div style={{position:"relative"}}>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"1.6rem",color:"#F7F5F0",fontWeight:300,marginBottom:8}}>
+                <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.6rem",color:"#F7F5F0",fontWeight:300,marginBottom:8}}>
                   Seu salão ainda não está aqui?
                 </div>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".78rem",color:"#9A8F85",marginBottom:20,lineHeight:1.7}}>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:"#9A8F85",marginBottom:20,lineHeight:1.7}}>
                   Cadastre-se gratuitamente e apareça para milhares de clientes.
                 </div>
-                <button onClick={onRegister} className="btn" style={{padding:"12px 32px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"2px",fontWeight:500}}>
+                <button onClick={onRegister} className="btn" style={{padding:"12px 32px",borderRadius:8,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",letterSpacing:"2px",fontWeight:500}}>
                   CADASTRAR MEU NEGÓCIO →
                 </button>
               </div>
@@ -2066,10 +2071,10 @@
               onDragOver={handleDragOver}
             >
               <div style={{ fontSize: "1.6rem", marginBottom: 6 }}>📷</div>
-              <div style={{ fontFamily: "var(--font-sans)", fontSize: ".75rem", color: "var(--muted)", marginBottom: 2 }}>
+              <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: ".75rem", color: "#5A5044", marginBottom: 2 }}>
                 Arraste fotos ou clique para selecionar
               </div>
-              <div style={{ fontFamily: "var(--font-sans)", fontSize: ".65rem", color: "#B0A898" }}>
+              <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: ".65rem", color: "#B0A898" }}>
                 JPG · PNG · WebP · máx 8MB por foto · até {MAX_PHOTOS} fotos
               </div>
               <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={e => handleFiles(e.target.files)} style={{ display: "none" }} />
@@ -2080,11 +2085,11 @@
           {photos.length > 0 && (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(100px,1fr))", gap: 8 }}>
               {photos.map((p, idx) => (
-                <div key={p.id} style={{ position: "relative", borderRadius: 8, overflow: "hidden", border: "1px solid var(--stone)", aspectRatio: "1", background: "#F0EDE8" }}>
+                <div key={p.id} style={{ position: "relative", borderRadius: 8, overflow: "hidden", border: "1px solid #DDD5CA", aspectRatio: "1", background: "#F0EDE8" }}>
                   <img src={p.preview} alt={`foto-${idx+1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   {/* Badge posição */}
                   {idx === 0 && (
-                    <div style={{ position: "absolute", top: 4, left: 4, background: "var(--gold)", color: "#fff", fontFamily: "var(--font-sans)", fontSize: ".55rem", padding: "2px 6px", borderRadius: 6, letterSpacing: "1px" }}>CAPA</div>
+                    <div style={{ position: "absolute", top: 4, left: 4, background: "#9A6D1F", color: "#fff", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: ".55rem", padding: "2px 6px", borderRadius: 6, letterSpacing: "1px" }}>CAPA</div>
                   )}
                   {/* Botões de controle */}
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, display: "flex", background: "rgba(26,23,21,.65)", padding: "4px" }}>
@@ -2098,7 +2103,7 @@
           )}
 
           {photos.length > 0 && (
-            <div style={{ fontFamily: "var(--font-sans)", fontSize: ".65rem", color: "var(--muted)", marginTop: 8, textAlign: "center" }}>
+            <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: ".65rem", color: "#5A5044", marginTop: 8, textAlign: "center" }}>
               {photos.length}/{MAX_PHOTOS} fotos · A primeira foto é usada como capa · Use ‹ › para reordenar
             </div>
           )}
@@ -2361,23 +2366,17 @@
         return <AdminPanel onBack={()=>setShowAdmin(false)} currentUser={authUser} />;
       }
 
-      if (authLoading) return (
-        <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"var(--cream)"}}>
-          <div style={{textAlign:"center"}}>
-            <div style={{width:40,height:40,border:"3px solid #EDE9E2",borderTopColor:"#C9A96E",borderRadius:"50%",animation:"spin .7s linear infinite",margin:"0 auto 16px"}} />
-            <div style={{fontFamily:"var(--font-sans)",fontSize:".8rem",color:"var(--muted)"}}>Carregando...</div>
-          </div>
-        </div>
-      );
+      // authLoading: a tela #app-loading cobre o React enquanto Firebase inicializa
+      // Se Firebase demorar, o timeout de 3s já remove o loader e o app renderiza normalmente
 
       return (
-        <div style={{minHeight:"100vh",background:"var(--cream)"}}>
+        <div style={{minHeight:"100vh",background:"#F8F5F0"}}>
           {/* TOAST */}
           {toast&&(
             <div style={{position:"fixed",top:16,right:16,zIndex:9999,animation:"toastIn .28s ease",
               background:toast.type==="error"?"#2A1210":toast.type==="success"?"#0F2010":toast.type==="info"?"#14203A":"#1A1715",
               color:toast.type==="error"?"#F4907A":toast.type==="success"?"#7DC97D":toast.type==="info"?"#79B8D4":"#F7F5F0",
-              padding:"12px 20px",borderRadius:10,fontFamily:"var(--font-sans)",fontSize:".82rem",
+              padding:"12px 20px",borderRadius:10,fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",
               boxShadow:"0 8px 32px rgba(0,0,0,.35)",
               borderLeft:`3px solid ${toast.type==="error"?"#D4735A":toast.type==="success"?"#5BAA5B":toast.type==="info"?"#79B8D4":"#C9A96E"}`,
               maxWidth:380,lineHeight:1.5}}>
@@ -2391,12 +2390,12 @@
           {/* DRAFT BANNER */}
           {hasDraft&&(screen==="landing"||screen==="search")&&authUser&&(
             <div className="fade-up" style={{background:"#FFF8ED",borderBottom:"1px solid #F0D99A",padding:"10px 24px",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-              <span style={{fontFamily:"var(--font-sans)",fontSize:".78rem",color:"#7A6020"}}>☁️ Rascunho salvo. Continuar de onde parou?</span>
+              <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:"#7A6020"}}>☁️ Rascunho salvo. Continuar de onde parou?</span>
               <div style={{display:"flex",gap:8}}>
-                <button className="btn" onClick={restoreDraft} disabled={draftLoading} style={{padding:"6px 16px",borderRadius:6,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".75rem"}}>
+                <button className="btn" onClick={restoreDraft} disabled={draftLoading} style={{padding:"6px 16px",borderRadius:6,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem"}}>
                   {draftLoading?"Carregando...":"Restaurar rascunho"}
                 </button>
-                <button className="btn" onClick={()=>setHasDraft(false)} style={{padding:"6px 12px",borderRadius:6,background:"transparent",color:"var(--muted)",border:"1px solid var(--stone2)",fontFamily:"var(--font-sans)",fontSize:".75rem"}}>Descartar</button>
+                <button className="btn" onClick={()=>setHasDraft(false)} style={{padding:"6px 12px",borderRadius:6,background:"transparent",color:"#5A5044",border:"1px solid #C4BAB0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem"}}>Descartar</button>
               </div>
             </div>
           )}
@@ -2404,39 +2403,39 @@
           {/* NAV */}
           <nav className="navbar" style={{padding:"0 28px",height:64,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <div onClick={()=>{setScreen("search");setStep(1);}} style={{cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
-              <span style={{fontFamily:"var(--font-serif)",fontSize:"1.4rem",color:"var(--ink)",letterSpacing:"1px"}}>
-                Beleza <em style={{color:"var(--gold)"}}>Já</em>
+              <span style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.4rem",color:"#0E0C09",letterSpacing:"1px"}}>
+                Beleza <em style={{color:"#9A6D1F"}}>Já</em>
               </span>
-              <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",letterSpacing:"3px"}}>{screen==="search"?"BUSCA DE SALÕES":"CADASTRO EMPRESARIAL"}</span>
+              <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044",letterSpacing:"3px"}}>{screen==="search"?"BUSCA DE SALÕES":"CADASTRO EMPRESARIAL"}</span>
             </div>
             <div style={{display:"flex",alignItems:"center",gap:16}}>
               {/* Progresso real (melhoria 3.1) — exibido durante o form */}
               {screen==="form"&&(
-                <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--gold)"}}>
+                <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#9A6D1F"}}>
                   {progress.pct}% · {progress.filled}/{progress.total} campos
                 </span>
               )}
               {authUser&&saveStatus&&(
-                <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:saveStatus==="saved"?"var(--green)":saveStatus==="error"?"var(--red)":"var(--muted)",display:"flex",alignItems:"center",gap:4}}>
-                  {saveStatus==="saving"&&<span className="spinner" style={{width:10,height:10,borderTopColor:"var(--muted)",marginRight:0}} />}
+                <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:saveStatus==="saved"?"#1E6B22":saveStatus==="error"?"#A83220":"#5A5044",display:"flex",alignItems:"center",gap:4}}>
+                  {saveStatus==="saving"&&<span className="spinner" style={{width:10,height:10,borderTopColor:"#5A5044",marginRight:0}} />}
                   {saveStatus==="saving"?"Salvando...":saveStatus==="error"?"⚠️ Falha ao salvar":"☁️ Salvo"}
                 </span>
               )}
               {authUser ? (
                 <div style={{display:"flex",alignItems:"center",gap:8}}>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted)"}}>🔐 {authUser.email}</span>
-                  <button onClick={()=>auth.signOut().then(()=>showToast("Sessão encerrada","info"))} className="btn" style={{fontFamily:"var(--font-sans)",fontSize:".62rem",color:"var(--red)",background:"transparent",padding:"3px 8px",borderRadius:6,border:"1px solid #F4D0C8"}}>Sair</button>
+                  <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#5A5044"}}>🔐 {authUser.email}</span>
+                  <button onClick={()=>auth.signOut().then(()=>showToast("Sessão encerrada","info"))} className="btn" style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".62rem",color:"#A83220",background:"transparent",padding:"3px 8px",borderRadius:6,border:"1px solid #F4D0C8"}}>Sair</button>
                 </div>
               ) : (
-                <button onClick={()=>setShowLogin(true)} className="btn" style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--ink)",background:"var(--cream)",padding:"5px 12px",borderRadius:6,border:"1px solid var(--stone2)"}}>Entrar</button>
+                <button onClick={()=>setShowLogin(true)} className="btn" style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#0E0C09",background:"#F8F5F0",padding:"5px 12px",borderRadius:6,border:"1px solid #C4BAB0"}}>Entrar</button>
               )}
               {/* Link admin — visível apenas para admins configurados em ADMIN_UIDS */}
               {authUser && ADMIN_UIDS.includes(authUser.uid) && (
-                <button onClick={()=>setShowAdmin(true)} className="btn" style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)",background:"transparent",padding:"4px 8px",borderRadius:6,border:"1px solid var(--stone)"}}>Admin</button>
+                <button onClick={()=>setShowAdmin(true)} className="btn" style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044",background:"transparent",padding:"4px 8px",borderRadius:6,border:"1px solid #DDD5CA"}}>Admin</button>
               )}
               <div style={{display:"flex",alignItems:"center",gap:6}}>
                 <div className="sec-dot" style={{width:8,height:8,borderRadius:"50%",background:securityScore>60?"#5BAA5B":securityScore>30?"#E8B86D":"#D4735A",boxShadow:`0 0 6px ${securityScore>60?"#5BAA5B":securityScore>30?"#E8B86D":"#D4735A"}`}} />
-                <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted2)"}}>Seg.: {securityScore}%</span>
+                <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#3A342A"}}>Seg.: {securityScore}%</span>
               </div>
             </div>
           </nav>
@@ -2455,16 +2454,16 @@
                 {/* Decorative orbs */}
                 <div style={{position:"absolute",inset:0,backgroundImage:"radial-gradient(ellipse 60% 50% at 10% 60%,rgba(168,121,46,.14) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 90% 15%,rgba(168,121,46,.09) 0%,transparent 60%),radial-gradient(ellipse 30% 30% at 50% 90%,rgba(168,121,46,.06) 0%,transparent 60%)"}} />
                 {/* Gold line accent */}
-                <div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:120,height:3,background:"linear-gradient(90deg,transparent,var(--gold),transparent)"}} />
+                <div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:120,height:3,background:"linear-gradient(90deg,transparent,#9A6D1F,transparent)"}} />
                 <div style={{position:"relative",maxWidth:680,margin:"0 auto"}}>
                   <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(168,121,46,.12)",border:"1px solid rgba(168,121,46,.25)",borderRadius:20,padding:"6px 16px",marginBottom:28}}>
-                    <span style={{width:6,height:6,borderRadius:"50%",background:"var(--gold)",display:"inline-block",animation:"pulse 2s infinite"}} />
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"3px",color:"var(--gold-lt)"}}>PLATAFORMA VERIFICADA · CADASTRO GRATUITO</span>
+                    <span style={{width:6,height:6,borderRadius:"50%",background:"#9A6D1F",display:"inline-block",animation:"pulse 2s infinite"}} />
+                    <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"3px",color:"#BF8E3A"}}>PLATAFORMA VERIFICADA · CADASTRO GRATUITO</span>
                   </div>
-                  <h1 style={{fontFamily:"var(--font-serif)",fontSize:"clamp(2.4rem,5.5vw,4.2rem)",color:"#F5F2ED",fontWeight:300,lineHeight:1.08,margin:"0 0 20px",letterSpacing:"-0.5px"}}>
-                    Cadastre seu salão<br/><em style={{color:"var(--gold-lt)",fontStyle:"italic"}}>com segurança total</em>
+                  <h1 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"clamp(2.4rem,5.5vw,4.2rem)",color:"#F5F2ED",fontWeight:300,lineHeight:1.08,margin:"0 0 20px",letterSpacing:"-0.5px"}}>
+                    Cadastre seu salão<br/><em style={{color:"#BF8E3A",fontStyle:"italic"}}>com segurança total</em>
                   </h1>
-                  <p style={{fontFamily:"var(--font-sans)",color:"rgba(255,255,255,.52)",fontSize:".95rem",maxWidth:480,margin:"0 auto 40px",lineHeight:1.75}}>
+                  <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",color:"rgba(255,255,255,.52)",fontSize:".95rem",maxWidth:480,margin:"0 auto 40px",lineHeight:1.75}}>
                     Dados salvos em tempo real, CNPJ verificado na Receita Federal e visibilidade para novos clientes.
                   </p>
                   <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
@@ -2479,11 +2478,11 @@
               </div>
 
               {/* ── Feature strip ── */}
-              <div style={{background:"#fff",padding:"48px 24px",borderBottom:"1px solid var(--stone)"}}>
+              <div style={{background:"#fff",padding:"48px 24px",borderBottom:"1px solid #DDD5CA"}}>
                 <div style={{maxWidth:860,margin:"0 auto"}}>
                   <div style={{textAlign:"center",marginBottom:36}}>
-                    <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:8}}>POR QUE BELEZA JÁ</p>
-                    <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-xl)",fontWeight:300,color:"var(--ink)"}}>Tudo que você precisa em um só lugar</h2>
+                    <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"4px",color:"#5A5044",marginBottom:8}}>POR QUE BELEZA JÁ</p>
+                    <h2 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.75rem",fontWeight:300,color:"#0E0C09"}}>Tudo que você precisa em um só lugar</h2>
                   </div>
                   <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:14}}>
                     {[
@@ -2496,10 +2495,10 @@
                       {icon:"🛡️",title:"Antifraude",        desc:"Validação multicamada de documentos"},
                       {icon:"📊",title:"Progresso Real",    desc:"Barra baseada em campos efetivamente preenchidos"},
                     ].map((b,i)=>(
-                      <div key={b.title} className="hov fade-up" style={{textAlign:"center",padding:"22px 14px",background:"var(--cream)",borderRadius:14,border:"1px solid var(--stone)",animationDelay:`${i*.06}s`}}>
-                        <div style={{width:44,height:44,borderRadius:12,background:"var(--gold-bg)",border:"1px solid #D4A83020",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.3rem",margin:"0 auto 12px"}}>{b.icon}</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".78rem",fontWeight:600,color:"var(--ink)",marginBottom:5}}>{b.title}</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",lineHeight:1.5}}>{b.desc}</div>
+                      <div key={b.title} className="hov fade-up" style={{textAlign:"center",padding:"22px 14px",background:"#F8F5F0",borderRadius:14,border:"1px solid #DDD5CA",animationDelay:`${i*.06}s`}}>
+                        <div style={{width:44,height:44,borderRadius:12,background:"#FBF6EE",border:"1px solid #D4A83020",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.3rem",margin:"0 auto 12px"}}>{b.icon}</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",fontWeight:600,color:"#0E0C09",marginBottom:5}}>{b.title}</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",lineHeight:1.5}}>{b.desc}</div>
                       </div>
                     ))}
                   </div>
@@ -2509,17 +2508,17 @@
               {/* ── Plan cards ── */}
               <div style={{maxWidth:860,margin:"0 auto",padding:"56px 24px"}}>
                 <div style={{textAlign:"center",marginBottom:40}}>
-                  <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:8}}>COMECE HOJE</p>
-                  <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,color:"var(--ink)"}}>Qual é o seu perfil?</h2>
+                  <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"4px",color:"#5A5044",marginBottom:8}}>COMECE HOJE</p>
+                  <h2 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"2.25rem",fontWeight:300,color:"#0E0C09"}}>Qual é o seu perfil?</h2>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:20}}>
                   {PLAN_TYPES.map((t,i)=>(
                     <div key={t.id} className="hov fade-up" onClick={()=>{setAccountType(t.id);setScreen("type");}}
-                      style={{background:"#fff",borderRadius:18,padding:"32px 24px",border:"1px solid var(--stone)",boxShadow:"var(--shadow-sm)",borderTop:`3px solid ${t.color}`,animationDelay:`${i*.1}s`,cursor:"pointer"}}>
+                      style={{background:"#fff",borderRadius:18,padding:"32px 24px",border:"1px solid #DDD5CA",boxShadow:"0 2px 8px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.05)",borderTop:`3px solid ${t.color}`,animationDelay:`${i*.1}s`,cursor:"pointer"}}>
                       <div style={{width:52,height:52,borderRadius:14,background:`${t.color}18`,border:`1px solid ${t.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.6rem",marginBottom:16}}>{t.icon}</div>
-                      <h3 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-lg)",fontWeight:400,marginBottom:8,color:"var(--ink)"}}>{t.label}</h3>
-                      <p style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",lineHeight:1.65,marginBottom:20}}>{t.desc}</p>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:t.color,fontWeight:600,letterSpacing:"1.5px",display:"flex",alignItems:"center",gap:6}}>
+                      <h3 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.375rem",fontWeight:400,marginBottom:8,color:"#0E0C09"}}>{t.label}</h3>
+                      <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",color:"#3A342A",lineHeight:1.65,marginBottom:20}}>{t.desc}</p>
+                      <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:t.color,fontWeight:600,letterSpacing:"1.5px",display:"flex",alignItems:"center",gap:6}}>
                         COMEÇAR <span>→</span>
                       </div>
                     </div>
@@ -2533,26 +2532,26 @@
           {screen==="type"&&(
             <div className="slide-in" style={{maxWidth:680,margin:"0 auto",padding:"56px 24px"}}>
               <div style={{textAlign:"center",marginBottom:44}}>
-                <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:10}}>PASSO 1 DE 1</p>
-                <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,color:"var(--ink)",marginBottom:10}}>Qual é o seu tipo de negócio?</h2>
-                <p style={{fontFamily:"var(--font-sans)",fontSize:".88rem",color:"var(--muted)",lineHeight:1.6}}>Isso define as seções do formulário de cadastro</p>
+                <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"4px",color:"#5A5044",marginBottom:10}}>PASSO 1 DE 1</p>
+                <h2 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"2.25rem",fontWeight:300,color:"#0E0C09",marginBottom:10}}>Qual é o seu tipo de negócio?</h2>
+                <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".88rem",color:"#5A5044",lineHeight:1.6}}>Isso define as seções do formulário de cadastro</p>
               </div>
               <div style={{display:"flex",flexDirection:"column",gap:14,marginBottom:36}}>
                 {PLAN_TYPES.map(t=>(
                   <div key={t.id} onClick={()=>setAccountType(t.id)}
                     style={{background:"#fff",borderRadius:14,padding:"22px 24px",
-                      border:`2px solid ${accountType===t.id?t.color:"var(--stone)"}`,
+                      border:`2px solid ${accountType===t.id?t.color:"#DDD5CA"}`,
                       cursor:"pointer",transition:"all .22s",
-                      boxShadow:accountType===t.id?`0 0 0 4px ${t.color}14, var(--shadow-sm)`:"var(--shadow-xs)",
+                      boxShadow:accountType===t.id?`0 0 0 4px ${t.color}14, 0 2px 8px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.05)`:"0 1px 4px rgba(0,0,0,0.08)",
                       display:"flex",alignItems:"center",gap:20,
                       transform:accountType===t.id?"translateY(-2px)":"none",
                     }}>
                     <div style={{width:54,height:54,borderRadius:14,background:`${t.color}14`,border:`1px solid ${t.color}28`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.7rem",flexShrink:0}}>{t.icon}</div>
                     <div style={{flex:1}}>
-                      <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-md)",fontWeight:400,color:"var(--ink)",marginBottom:4}}>{t.label}</div>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--muted2)",lineHeight:1.5}}>{t.desc}</div>
+                      <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.125rem",fontWeight:400,color:"#0E0C09",marginBottom:4}}>{t.label}</div>
+                      <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",color:"#3A342A",lineHeight:1.5}}>{t.desc}</div>
                     </div>
-                    <div style={{width:24,height:24,borderRadius:"50%",border:`2px solid ${accountType===t.id?t.color:"var(--stone2)"}`,background:accountType===t.id?t.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .22s"}}>
+                    <div style={{width:24,height:24,borderRadius:"50%",border:`2px solid ${accountType===t.id?t.color:"#C4BAB0"}`,background:accountType===t.id?t.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .22s"}}>
                       {accountType===t.id&&<div style={{width:9,height:9,borderRadius:"50%",background:"#fff"}} />}
                     </div>
                   </div>
@@ -2562,7 +2561,7 @@
                 <button className="btn btn-ghost" onClick={()=>setScreen("landing")} style={{padding:"14px 24px",borderRadius:10,fontSize:".85rem"}}>← Voltar</button>
                 <button className="btn btn-primary" disabled={!accountType} onClick={()=>setScreen("form")}
                   style={{flex:1,padding:"14px",borderRadius:10,fontSize:".85rem",letterSpacing:"2px",
-                    background:accountType?(PLAN_TYPES.find(t=>t.id===accountType)?.color||"var(--ink)"):"var(--stone2)"}}>
+                    background:accountType?(PLAN_TYPES.find(t=>t.id===accountType)?.color||"#0E0C09"):"#C4BAB0"}}>
                   CONTINUAR →
                 </button>
               </div>
@@ -2575,13 +2574,13 @@
               {/* Progress — baseado em campos reais (melhoria 3.1) */}
               <div style={{marginBottom:32}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",fontWeight:500}}>Etapa {step} de {totalSteps}</span>
-                  <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--gold)",fontWeight:600}}>
+                  <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",fontWeight:500}}>Etapa {step} de {totalSteps}</span>
+                  <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#9A6D1F",fontWeight:600}}>
                     {progress.pct}% completo
                   </span>
                 </div>
-                <div style={{height:6,background:"var(--stone)",borderRadius:3,overflow:"hidden",marginBottom:14}}>
-                  <div style={{height:"100%",borderRadius:3,width:`${progress.pct}%`,background:"linear-gradient(90deg,var(--gold),var(--gold-lt))",transition:"width .7s cubic-bezier(.22,1,.36,1)"}} />
+                <div style={{height:6,background:"#DDD5CA",borderRadius:3,overflow:"hidden",marginBottom:14}}>
+                  <div style={{height:"100%",borderRadius:3,width:`${progress.pct}%`,background:"linear-gradient(90deg,#9A6D1F,#BF8E3A)",transition:"width .7s cubic-bezier(.22,1,.36,1)"}} />
                 </div>
                 <div style={{display:"flex",gap:4}}>
                   {["Empresa","Endereço","Responsável","Verificação","Acesso"].map((label,i)=>{
@@ -2591,9 +2590,9 @@
                         title={label}
                         style={{
                           flex:1,textAlign:"center",
-                          background:active?"var(--ink)":done?"var(--gold-bg)":"var(--cream2)",
-                          color:active?"#F5F2ED":done?"var(--gold)":"var(--muted)",
-                          border:`1px solid ${active?"var(--ink2)":done?"#D4A83040":"var(--stone)"}`,
+                          background:active?"#0E0C09":done?"#FBF6EE":"#EEE9E1",
+                          color:active?"#F5F2ED":done?"#9A6D1F":"#5A5044",
+                          border:`1px solid ${active?"#1E1A13":done?"#D4A83040":"#DDD5CA"}`,
                           cursor:done||active?"pointer":"default",
                           fontWeight:active?600:done?500:400,
                           overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis",
@@ -2607,16 +2606,16 @@
               </div>
 
               {/* Security score */}
-              <div style={{background:"#fff",borderRadius:12,padding:"16px 20px",marginBottom:28,border:"1px solid var(--stone)",boxShadow:"var(--shadow-xs)",display:"flex",alignItems:"center",gap:16}}>
+              <div style={{background:"#fff",borderRadius:12,padding:"16px 20px",marginBottom:28,border:"1px solid #DDD5CA",boxShadow:"0 1px 4px rgba(0,0,0,0.08)",display:"flex",alignItems:"center",gap:16}}>
                 <div style={{flex:1}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2.5px",color:"var(--muted)",marginBottom:8,fontWeight:600}}>PONTUAÇÃO DE SEGURANÇA</div>
-                  <div style={{height:6,background:"var(--stone)",borderRadius:3,overflow:"hidden"}}>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2.5px",color:"#5A5044",marginBottom:8,fontWeight:600}}>PONTUAÇÃO DE SEGURANÇA</div>
+                  <div style={{height:6,background:"#DDD5CA",borderRadius:3,overflow:"hidden"}}>
                     <div style={{height:"100%",borderRadius:3,width:`${securityScore}%`,
-                      background:securityScore>60?"linear-gradient(90deg,var(--green),#5BAA5B)":securityScore>30?"linear-gradient(90deg,var(--gold),var(--gold-lt))":"linear-gradient(90deg,var(--red),#D4735A)",
+                      background:securityScore>60?"linear-gradient(90deg,#1E6B22,#5BAA5B)":securityScore>30?"linear-gradient(90deg,#9A6D1F,#BF8E3A)":"linear-gradient(90deg,#A83220,#D4735A)",
                       transition:"width .8s cubic-bezier(.22,1,.36,1)"}} />
                   </div>
                 </div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"1.8rem",fontWeight:300,color:securityScore>60?"var(--green)":securityScore>30?"var(--gold)":"var(--red)",minWidth:52,textAlign:"right",lineHeight:1}}>{securityScore}<span style={{fontSize:".9rem"}}>%</span></div>
+                <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.8rem",fontWeight:300,color:securityScore>60?"#1E6B22":securityScore>30?"#9A6D1F":"#A83220",minWidth:52,textAlign:"right",lineHeight:1}}>{securityScore}<span style={{fontSize:".9rem"}}>%</span></div>
               </div>
 
               <div className={stepDir>=0?"slide-in":"slide-back"} key={`step-${step}`}>
@@ -2636,13 +2635,13 @@
                     <div style={{display:"flex",gap:8}}>
                       <input className={`inp${(errors.cnpj||errors.cnpjVerified||cnpjError)?" err":""}`} value={formData.cnpj} onChange={e=>{set("cnpj",fmtCNPJ(e.target.value));setCnpjError("");setCnpjData(null);setCnpjSugg([]);}} placeholder="00.000.000/0000-00" style={{flex:1}} inputMode="numeric" />
                       <button className="btn" onClick={verifyCNPJ} disabled={verifyingCNPJ||formData.cnpjVerified} style={{
-                        padding:"0 16px",borderRadius:8,fontSize:".75rem",letterSpacing:"1px",whiteSpace:"nowrap",fontFamily:"var(--font-sans)",
-                        background:formData.cnpjVerified?"#5BAA5B15":verifyingCNPJ?"var(--stone)":"var(--ink)",
-                        color:formData.cnpjVerified?"var(--green)":verifyingCNPJ?"var(--muted)":"#F7F5F0",
+                        padding:"0 16px",borderRadius:8,fontSize:".75rem",letterSpacing:"1px",whiteSpace:"nowrap",fontFamily:"'DM Sans', system-ui, sans-serif",
+                        background:formData.cnpjVerified?"#5BAA5B15":verifyingCNPJ?"#DDD5CA":"#0E0C09",
+                        color:formData.cnpjVerified?"#1E6B22":verifyingCNPJ?"#5A5044":"#F7F5F0",
                         border:`1px solid ${formData.cnpjVerified?"#5BAA5B":"transparent"}`,
                         display:"flex",alignItems:"center",gap:6,
                       }}>
-                        {verifyingCNPJ&&<span className="spinner" style={{borderTopColor:"var(--muted)"}} />}
+                        {verifyingCNPJ&&<span className="spinner" style={{borderTopColor:"#5A5044"}} />}
                         {formData.cnpjVerified?"✓ Verificado":verifyingCNPJ?"Consultando...":"Verificar CNPJ"}
                       </button>
                     </div>
@@ -2654,8 +2653,8 @@
                     )}
                     {cnpjData&&formData.cnpjVerified&&(
                       <div style={{marginTop:8,background:"#5BAA5B0D",border:"1px solid #5BAA5B30",borderRadius:8,padding:"10px 14px",animation:"fadeUp .3s ease"}}>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--green)",fontWeight:600,marginBottom:4}}>✓ CNPJ ativo — Receita Federal</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--muted2)",lineHeight:1.6}}>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#1E6B22",fontWeight:600,marginBottom:4}}>✓ CNPJ ativo — Receita Federal</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#3A342A",lineHeight:1.6}}>
                           {cnpjData.razao_social&&<div><strong>Razão Social:</strong> {cnpjData.razao_social}</div>}
                           {cnpjData.municipio?.descricao&&<div><strong>Município:</strong> {cnpjData.municipio.descricao} / {cnpjData.municipio.uf}</div>}
                           {cnpjData.cnae_fiscal_principal?.descricao&&<div><strong>CNAE:</strong> {cnpjData.cnae_fiscal_principal.descricao}</div>}
@@ -2663,9 +2662,9 @@
                         {/* Sugestões de serviço pelo CNAE (melhoria 3.3) */}
                         {cnpjSuggestions.length>0&&(
                           <div style={{marginTop:8,borderTop:"1px solid #5BAA5B20",paddingTop:8}}>
-                            <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--green)",marginBottom:6}}>💡 Serviços sugeridos pelo CNAE:</div>
+                            <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#1E6B22",marginBottom:6}}>💡 Serviços sugeridos pelo CNAE:</div>
                             <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
-                              {cnpjSuggestions.map(s=><span key={s} style={{fontFamily:"var(--font-sans)",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"var(--green)",border:"1px solid #5BAA5B30"}}>{s}</span>)}
+                              {cnpjSuggestions.map(s=><span key={s} style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".6rem",padding:"2px 8px",borderRadius:10,background:"#5BAA5B15",color:"#1E6B22",border:"1px solid #5BAA5B30"}}>{s}</span>)}
                             </div>
                           </div>
                         )}
@@ -2685,7 +2684,7 @@
                     <Field label="WhatsApp"><input className="inp" value={formData.whatsapp} onChange={e=>set("whatsapp",fmtPhone(e.target.value))} autoComplete="tel" placeholder="(11) 99999-0000" inputMode="tel" /></Field>
                     <Field label="Instagram">
                       <div style={{position:"relative"}}>
-                        <span style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",fontFamily:"var(--font-sans)",fontSize:".85rem",color:"var(--muted)"}}>@</span>
+                        <span style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".85rem",color:"#5A5044"}}>@</span>
                         <input className="inp" style={{paddingLeft:28}} value={formData.instagram} onChange={e=>set("instagram",e.target.value)} placeholder="seunegocio" />
                       </div>
                     </Field>
@@ -2741,7 +2740,7 @@
                 <FormSection title="03 — Responsável Legal" icon="👤">
                   <div style={{background:"#FFF8ED",border:"1px solid #F0D99A",borderRadius:10,padding:"14px 16px",marginBottom:8,display:"flex",gap:10}}>
                     <span>⚠️</span>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".75rem",color:"#7A6020",lineHeight:1.6}}>Dados usados <strong>exclusivamente para verificação</strong> — nunca exibidos publicamente.</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#7A6020",lineHeight:1.6}}>Dados usados <strong>exclusivamente para verificação</strong> — nunca exibidos publicamente.</div>
                   </div>
                   <Row2>
                     <Field label="Nome Completo *" error={errors.ownerName}><input className={`inp${errors.ownerName?" err":""}`} value={formData.ownerName} onChange={e=>set("ownerName",e.target.value)} autoComplete="name" placeholder="Nome conforme RG/CNH" /></Field>
@@ -2771,60 +2770,60 @@
                 <FormSection title="04 — Verificação de Contato" icon="📱">
                   <Hint>Código de 6 dígitos. Configure EmailJS ou Cloud Functions para envio real.</Hint>
                   {/* Email */}
-                  <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:12,padding:"20px",marginBottom:16}}>
+                  <div style={{background:"#fff",border:"1px solid #DDD5CA",borderRadius:12,padding:"20px",marginBottom:16}}>
                     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
                       <div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".8rem",fontWeight:500}}>📧 E-mail</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginTop:2}}>{formData.email||"—"}</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".8rem",fontWeight:500}}>📧 E-mail</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",marginTop:2}}>{formData.email||"—"}</div>
                       </div>
                       {formData.emailVerified
-                        ?<span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--green)",background:"#5BAA5B15",padding:"4px 12px",borderRadius:20,border:"1px solid #5BAA5B40"}}>✓ Verificado</span>
-                        :<button className="btn" onClick={()=>sendVerification("email")} disabled={sendingCode||!formData.email} style={{padding:"6px 14px",borderRadius:6,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".72rem",display:"flex",alignItems:"center"}}>
+                        ?<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#1E6B22",background:"#5BAA5B15",padding:"4px 12px",borderRadius:20,border:"1px solid #5BAA5B40"}}>✓ Verificado</span>
+                        :<button className="btn" onClick={()=>sendVerification("email")} disabled={sendingCode||!formData.email} style={{padding:"6px 14px",borderRadius:6,background:"#0E0C09",color:"#F7F5F0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",display:"flex",alignItems:"center"}}>
                           {sendingCode&&<span className="spinner" />}Enviar código
                         </button>}
                     </div>
                     {!formData.emailVerified&&(
                       <div style={{display:"flex",gap:8}}>
                         <input className="inp" value={formData.emailCode} onChange={e=>set("emailCode",e.target.value.replace(/\D/g,"").slice(0,6))} placeholder="000000" style={{flex:1,letterSpacing:"4px",fontSize:"1.1rem",textAlign:"center"}} maxLength={6} inputMode="numeric" />
-                        <button className="btn" onClick={()=>checkCode("email")} style={{padding:"0 16px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem"}}>Confirmar</button>
+                        <button className="btn" onClick={()=>checkCode("email")} style={{padding:"0 16px",borderRadius:8,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem"}}>Confirmar</button>
                       </div>
                     )}
-                    {errors.emailVerified&&<div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--red)",marginTop:6}}>{errors.emailVerified}</div>}
+                    {errors.emailVerified&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#A83220",marginTop:6}}>{errors.emailVerified}</div>}
                   </div>
                   {/* Phone */}
-                  <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:12,padding:"20px",marginBottom:16}}>
+                  <div style={{background:"#fff",border:"1px solid #DDD5CA",borderRadius:12,padding:"20px",marginBottom:16}}>
                     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
                       <div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".8rem",fontWeight:500}}>📱 Telefone</div>
-                        <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginTop:2}}>{formData.phone||"—"}</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".8rem",fontWeight:500}}>📱 Telefone</div>
+                        <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",marginTop:2}}>{formData.phone||"—"}</div>
                       </div>
                       {formData.phoneVerified
-                        ?<span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--green)",background:"#5BAA5B15",padding:"4px 12px",borderRadius:20,border:"1px solid #5BAA5B40"}}>✓ Verificado</span>
-                        :<button className="btn" onClick={()=>sendVerification("phone")} disabled={sendingCode||!formData.phone} style={{padding:"6px 14px",borderRadius:6,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".72rem",display:"flex",alignItems:"center"}}>
+                        ?<span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#1E6B22",background:"#5BAA5B15",padding:"4px 12px",borderRadius:20,border:"1px solid #5BAA5B40"}}>✓ Verificado</span>
+                        :<button className="btn" onClick={()=>sendVerification("phone")} disabled={sendingCode||!formData.phone} style={{padding:"6px 14px",borderRadius:6,background:"#0E0C09",color:"#F7F5F0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",display:"flex",alignItems:"center"}}>
                           {sendingCode&&<span className="spinner" />}Enviar código
                         </button>}
                     </div>
                     {!formData.phoneVerified&&(
                       <div style={{display:"flex",gap:8}}>
                         <input className="inp" value={formData.phoneCode} onChange={e=>set("phoneCode",e.target.value.replace(/\D/g,"").slice(0,6))} placeholder="000000" style={{flex:1,letterSpacing:"4px",fontSize:"1.1rem",textAlign:"center"}} maxLength={6} inputMode="numeric" />
-                        <button className="btn" onClick={()=>checkCode("phone")} style={{padding:"0 16px",borderRadius:8,background:"var(--gold)",color:"#fff",fontFamily:"var(--font-sans)",fontSize:".78rem"}}>Confirmar</button>
+                        <button className="btn" onClick={()=>checkCode("phone")} style={{padding:"0 16px",borderRadius:8,background:"#9A6D1F",color:"#fff",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem"}}>Confirmar</button>
                       </div>
                     )}
-                    {errors.phoneVerified&&<div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--red)",marginTop:6}}>{errors.phoneVerified}</div>}
+                    {errors.phoneVerified&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#A83220",marginTop:6}}>{errors.phoneVerified}</div>}
                   </div>
                   {/* Checklist */}
-                  <div style={{background:"var(--cream)",border:"1px solid var(--stone)",borderRadius:12,padding:"16px 20px"}}>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:12}}>CHECKLIST DE SEGURANÇA</div>
+                  <div style={{background:"#F8F5F0",border:"1px solid #DDD5CA",borderRadius:12,padding:"16px 20px"}}>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2px",color:"#5A5044",marginBottom:12}}>CHECKLIST DE SEGURANÇA</div>
                     {FRAUD_RULES.map(r=>{
                       const done=(r.id==="cnpj"&&formData.cnpjVerified)||(r.id==="tel"&&formData.phoneVerified)||(r.id==="email"&&formData.emailVerified)||(r.id==="doc"&&(formData.ownerDoc||formData.ownerDocUrl))||(r.id==="addr"&&(formData.addressProof||formData.addressProofUrl));
                       return(
                         <div key={r.id} style={{display:"flex",gap:10,alignItems:"center",marginBottom:10,transition:"all .3s"}}>
                           <div style={{width:20,height:20,borderRadius:"50%",background:done?"#5BAA5B15":"#EDE9E2",border:`1px solid ${done?"#5BAA5B":"#DDD8CE"}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all .3s"}}>
-                            {done?<span style={{color:"var(--green)",fontSize:".7rem"}}>✓</span>:<span style={{color:"#C8BBA8",fontSize:".7rem"}}>○</span>}
+                            {done?<span style={{color:"#1E6B22",fontSize:".7rem"}}>✓</span>:<span style={{color:"#C8BBA8",fontSize:".7rem"}}>○</span>}
                           </div>
                           <div>
-                            <div style={{fontFamily:"var(--font-sans)",fontSize:".75rem",color:done?"var(--ink)":"var(--muted)",fontWeight:done?500:400,transition:"all .3s"}}>{r.label}</div>
-                            <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)"}}>{r.desc}</div>
+                            <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:done?"#0E0C09":"#5A5044",fontWeight:done?500:400,transition:"all .3s"}}>{r.label}</div>
+                            <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044"}}>{r.desc}</div>
                           </div>
                         </div>
                       );
@@ -2845,7 +2844,7 @@
                       {formData.password&&(
                         <div style={{marginTop:6}}>
                           <div style={{height:3,background:"#DDD8CE",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",borderRadius:2,width:`${pwStrength.score}%`,background:pwStrength.color,transition:"all .4s ease"}} /></div>
-                          <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:pwStrength.color,marginTop:3}}>{pwStrength.label}</div>
+                          <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:pwStrength.color,marginTop:3}}>{pwStrength.label}</div>
                           <div style={{display:"flex",flexWrap:"wrap",gap:4,marginTop:6}}>
                             {[{ok:formData.password.length>=8,label:"8+ chars"},{ok:/[A-Z]/.test(formData.password),label:"Maiúscula"},{ok:/[0-9]/.test(formData.password),label:"Número"},{ok:/[^A-Za-z0-9]/.test(formData.password),label:"Símbolo"}].map(r=>(
                               <span key={r.label} style={{fontFamily:"'DM Sans',system-ui,sans-serif",fontSize:".6rem",padding:"2px 7px",borderRadius:10,background:r.ok?"#5BAA5B15":"#F0EDE8",color:r.ok?"#5BAA5B":"#9A9288",border:`1px solid ${r.ok?"#5BAA5B40":"#DDD8CE"}`,transition:"all .25s"}}>
@@ -2861,11 +2860,11 @@
                         <input className={`inp${errors.confirmPassword?" err":""}`} type={showCPass?"text":"password"} value={formData.confirmPassword} onChange={e=>set("confirmPassword",e.target.value)} placeholder="Repita a senha" style={{paddingRight:36}} />
                         <span className="pass-eye" onClick={()=>setShowCPass(p=>!p)}>{showCPass?"🙈":"👁️"}</span>
                       </div>
-                      {formData.confirmPassword&&formData.password===formData.confirmPassword&&<div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--green)",marginTop:4}}>✓ Senhas coincidem</div>}
+                      {formData.confirmPassword&&formData.password===formData.confirmPassword&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#1E6B22",marginTop:4}}>✓ Senhas coincidem</div>}
                     </Field>
                   </Row2>
-                  <div style={{background:"var(--cream)",border:"1px solid var(--stone)",borderRadius:12,padding:"16px 20px",marginBottom:20}}>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:14}}>DADOS BANCÁRIOS</div>
+                  <div style={{background:"#F8F5F0",border:"1px solid #DDD5CA",borderRadius:12,padding:"16px 20px",marginBottom:20}}>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2px",color:"#5A5044",marginBottom:14}}>DADOS BANCÁRIOS</div>
                     <Row2>
                       <Field label="Banco"><input className="inp" value={formData.bankName} onChange={e=>set("bankName",e.target.value)} placeholder="Nome do banco" /></Field>
                       <Field label="Chave PIX"><input className="inp" value={formData.pix} onChange={e=>set("pix",e.target.value)} placeholder="CPF, CNPJ, e-mail ou telefone" /></Field>
@@ -2882,15 +2881,15 @@
                           {formData[t.key]&&<span style={{color:"#fff",fontSize:".7rem"}}>✓</span>}
                         </div>
                         <div>
-                          <span style={{fontFamily:"var(--font-sans)",fontSize:".78rem",color:t.warn?"#7A5020":"var(--ink)",lineHeight:1.5}}>{t.label}</span>
-                          {t.err&&<div style={{fontFamily:"var(--font-sans)",fontSize:".68rem",color:"var(--red)",marginTop:2}}>{t.err}</div>}
+                          <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".78rem",color:t.warn?"#7A5020":"#0E0C09",lineHeight:1.5}}>{t.label}</span>
+                          {t.err&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".68rem",color:"#A83220",marginTop:2}}>{t.err}</div>}
                         </div>
                       </div>
                     ))}
                   </div>
                   <div style={{background:"#F0F7FF",border:"1px solid #C0D8F0",borderRadius:10,padding:"12px 16px",marginBottom:16,display:"flex",gap:10}}>
                     <span>☁️</span>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"#2A5080",lineHeight:1.6}}>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#2A5080",lineHeight:1.6}}>
                       Ao enviar, sua conta será criada no <strong>Firebase Authentication</strong> e seus dados e documentos salvos com segurança no <strong>Firestore + Storage</strong>.
                     </div>
                   </div>
@@ -2902,12 +2901,12 @@
               {/* Catálogo opcional */}
               {step===5&&(needsServices||needsProducts)&&(
                 <div style={{marginTop:40}} className="fade-up">
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"4px",color:"var(--muted)",marginBottom:8,textAlign:"center"}}>PRÉ-CADASTRO DE CATÁLOGO (OPCIONAL)</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"4px",color:"#5A5044",marginBottom:8,textAlign:"center"}}>PRÉ-CADASTRO DE CATÁLOGO (OPCIONAL)</div>
                   {/* Fix #9: aviso quando não há serviços */}
                   {needsServices&&services.length===0&&(
                     <div style={{background:"#FBF6EE",border:"1px solid #DFC070",borderRadius:10,padding:"12px 16px",marginBottom:16,display:"flex",gap:10,alignItems:"center"}}>
                       <span style={{fontSize:"1.1rem"}}>⚠️</span>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"#6A500A"}}>
+                      <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",color:"#6A500A"}}>
                         Você ainda não cadastrou serviços. Adicione pelo menos um para que clientes encontrem o que você oferece.
                       </div>
                     </div>
@@ -2918,7 +2917,7 @@
               )}
 
               {/* Navigation buttons */}
-              <div style={{display:"flex",gap:12,marginTop:28,paddingTop:24,borderTop:"1px solid var(--stone)"}}>
+              <div style={{display:"flex",gap:12,marginTop:28,paddingTop:24,borderTop:"1px solid #DDD5CA"}}>
                 {step>1
                   ?<button className="btn btn-ghost" onClick={prevStep} aria-label="Etapa anterior" style={{flex:1,padding:"14px",borderRadius:10,fontSize:".85rem",letterSpacing:"1px"}}>← Anterior</button>
                   :<div style={{flex:1}} />
@@ -2936,14 +2935,14 @@
           {/* ══ REVIEW ════════════════════════════════════════════════════════ */}
           {screen==="review"&&(
             <div className="fade-up" style={{maxWidth:560,margin:"0 auto",padding:"72px 24px",textAlign:"center"}}>
-              <div style={{width:80,height:80,borderRadius:"50%",background:"var(--green-bg)",border:"2px solid var(--green-bd)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"2.4rem",margin:"0 auto 28px",animation:"popIn .4s ease"}}>🎉</div>
+              <div style={{width:80,height:80,borderRadius:"50%",background:"#1E6B2212",border:"2px solid #1E6B2235",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"2.4rem",margin:"0 auto 28px",animation:"popIn .4s ease"}}>🎉</div>
               <div className="badge badge-gold" style={{marginBottom:16}}>CADASTRO RECEBIDO</div>
-              <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,margin:"12px 0 14px",color:"var(--ink)"}}>Falta pouco!</h2>
-              <p style={{fontFamily:"var(--font-sans)",fontSize:".9rem",color:"var(--muted2)",lineHeight:1.8,marginBottom:36}}>
-                Seus dados foram salvos com segurança. Nossa equipe revisará em até <strong style={{color:"var(--ink)"}}>48 horas úteis</strong>.
+              <h2 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"2.25rem",fontWeight:300,margin:"12px 0 14px",color:"#0E0C09"}}>Falta pouco!</h2>
+              <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".9rem",color:"#3A342A",lineHeight:1.8,marginBottom:36}}>
+                Seus dados foram salvos com segurança. Nossa equipe revisará em até <strong style={{color:"#0E0C09"}}>48 horas úteis</strong>.
               </p>
-              <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:14,padding:"24px",marginBottom:24,textAlign:"left"}}>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:16}}>RESUMO DO CADASTRO</div>
+              <div style={{background:"#fff",border:"1px solid #DDD5CA",borderRadius:14,padding:"24px",marginBottom:24,textAlign:"left"}}>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2px",color:"#5A5044",marginBottom:16}}>RESUMO DO CADASTRO</div>
                 {[
                   {label:"Estabelecimento", val: formData.businessName||"—"},
                   {label:"CNPJ",            val: formData.cnpj||"—"},
@@ -2951,17 +2950,17 @@
                   {label:"Endereço",        val: formData.city&&formData.state?`${formData.city} — ${formData.state}`:"—"},
                   {label:"Responsável",     val: formData.ownerName||"—"},
                 ].map(r=>(
-                  <div key={r.label} style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:12,marginBottom:10,paddingBottom:10,borderBottom:"1px solid var(--stone)"}}>
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",flexShrink:0}}>{r.label}</span>
-                    <span style={{fontFamily:"var(--font-sans)",fontSize:".82rem",color:"var(--ink)",fontWeight:500,textAlign:"right"}}>{r.val}</span>
+                  <div key={r.label} style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",gap:12,marginBottom:10,paddingBottom:10,borderBottom:"1px solid #DDD5CA"}}>
+                    <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",flexShrink:0}}>{r.label}</span>
+                    <span style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",color:"#0E0C09",fontWeight:500,textAlign:"right"}}>{r.val}</span>
                   </div>
                 ))}
                 {services.length>0&&(
                   <div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginBottom:8}}>Serviços cadastrados ({services.length})</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",marginBottom:8}}>Serviços cadastrados ({services.length})</div>
                     <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                       {services.map(s=>(
-                        <span key={s.id} style={{fontFamily:"var(--font-sans)",fontSize:".72rem",padding:"4px 10px",borderRadius:20,background:"var(--cream)",border:"1px solid var(--stone)",color:"var(--ink2)"}}>
+                        <span key={s.id} style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",padding:"4px 10px",borderRadius:20,background:"#F8F5F0",border:"1px solid #DDD5CA",color:"#1E1A13"}}>
                           {s.name} · {s.priceType==="range"?`R$${s.priceMin}–${s.priceMax}`:`R$${s.price}`}
                         </span>
                       ))}
@@ -2969,8 +2968,8 @@
                   </div>
                 )}
               </div>
-              <div style={{background:"#fff",border:"1px solid var(--stone)",borderRadius:14,padding:"24px",marginBottom:24,textAlign:"left"}}>
-                <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2px",color:"var(--muted)",marginBottom:16}}>O QUE ACONTECE AGORA</div>
+              <div style={{background:"#fff",border:"1px solid #DDD5CA",borderRadius:14,padding:"24px",marginBottom:24,textAlign:"left"}}>
+                <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2px",color:"#5A5044",marginBottom:16}}>O QUE ACONTECE AGORA</div>
                 {[
                   {icon:"☁️",title:"Dados no Firestore",     desc:"Cadastro salvo e acessível de qualquer dispositivo"},
                   {icon:"📁",title:"Documentos no Storage",  desc:"Arquivos enviados com segurança para o Firebase Storage"},
@@ -2978,18 +2977,18 @@
                   {icon:"✅",title:"Aprovação e publicação", desc:"Perfil vai ao ar após aprovação"},
                 ].map((s,i)=>(
                   <div key={i} className="fade-up" style={{display:"flex",gap:14,alignItems:"flex-start",marginBottom:i<3?16:0,animationDelay:`${i*.08}s`}}>
-                    <div style={{width:36,height:36,borderRadius:10,background:"var(--cream)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.1rem",flexShrink:0,border:"1px solid var(--stone)"}}>{s.icon}</div>
+                    <div style={{width:36,height:36,borderRadius:10,background:"#F8F5F0",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.1rem",flexShrink:0,border:"1px solid #DDD5CA"}}>{s.icon}</div>
                     <div>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".8rem",fontWeight:500}}>{s.title}</div>
-                      <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginTop:2}}>{s.desc}</div>
+                      <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".8rem",fontWeight:500}}>{s.title}</div>
+                      <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",marginTop:2}}>{s.desc}</div>
                     </div>
                   </div>
                 ))}
               </div>
-              <div style={{background:"var(--cream)",border:"1px solid var(--stone)",borderRadius:10,padding:"14px",marginBottom:24,fontFamily:"var(--font-sans)",fontSize:".75rem",color:"var(--muted2)"}}>
-                🔒 Protocolo: <strong style={{color:"var(--ink)",fontFamily:"monospace"}}>{protocolRef.current}</strong>
+              <div style={{background:"#F8F5F0",border:"1px solid #DDD5CA",borderRadius:10,padding:"14px",marginBottom:24,fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".75rem",color:"#3A342A"}}>
+                🔒 Protocolo: <strong style={{color:"#0E0C09",fontFamily:"monospace"}}>{protocolRef.current}</strong>
               </div>
-              <button className="btn" onClick={()=>setScreen("dashboard")} style={{width:"100%",padding:"14px",borderRadius:8,background:"var(--ink)",color:"#F7F5F0",fontFamily:"var(--font-sans)",fontSize:".82rem",letterSpacing:"2px"}}>IR PARA MEU PAINEL →</button>
+              <button className="btn" onClick={()=>setScreen("dashboard")} style={{width:"100%",padding:"14px",borderRadius:8,background:"#0E0C09",color:"#F7F5F0",fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".82rem",letterSpacing:"2px"}}>IR PARA MEU PAINEL →</button>
             </div>
           )}
 
@@ -2998,41 +2997,41 @@
             <div className="fade-up" style={{maxWidth:920,margin:"0 auto",padding:"36px 24px"}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:32,flexWrap:"wrap",gap:16}}>
                 <div>
-                  <p style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"3px",color:"var(--muted)",marginBottom:6,fontWeight:600}}>PAINEL DO ESTABELECIMENTO</p>
-                  <h2 style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-2xl)",fontWeight:300,color:"var(--ink)"}}>{formData.businessName||"Meu Negócio"}</h2>
+                  <p style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"3px",color:"#5A5044",marginBottom:6,fontWeight:600}}>PAINEL DO ESTABELECIMENTO</p>
+                  <h2 style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"2.25rem",fontWeight:300,color:"#0E0C09"}}>{formData.businessName||"Meu Negócio"}</h2>
                 </div>
                 <div style={{display:"flex",flexDirection:"column",gap:8,alignItems:"flex-end"}}>
                   <div className="badge badge-gold">
-                    <span style={{width:6,height:6,borderRadius:"50%",background:"var(--gold)",display:"inline-block"}} />
+                    <span style={{width:6,height:6,borderRadius:"50%",background:"#9A6D1F",display:"inline-block"}} />
                     Em análise
                   </div>
-                  {authUser&&<div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",color:"var(--muted)"}}>ID: {authUser.uid.slice(0,12)}…</div>}
+                  {authUser&&<div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",color:"#5A5044"}}>ID: {authUser.uid.slice(0,12)}…</div>}
                 </div>
               </div>
 
               {/* Security banner */}
-              <div style={{background:"linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%)",borderRadius:16,padding:"22px 28px",marginBottom:24,display:"flex",gap:24,alignItems:"center",flexWrap:"wrap",boxShadow:"var(--shadow-md)"}}>
+              <div style={{background:"linear-gradient(135deg,#0E0C09 0%,#1E1A13 100%)",borderRadius:16,padding:"22px 28px",marginBottom:24,display:"flex",gap:24,alignItems:"center",flexWrap:"wrap",boxShadow:"0 6px 24px rgba(0,0,0,0.10),0 2px 8px rgba(0,0,0,0.06)"}}>
                 <div style={{flex:1,minWidth:200}}>
-                  <div style={{fontFamily:"var(--font-sans)",fontSize:".65rem",letterSpacing:"2.5px",color:"var(--gold)",marginBottom:10,fontWeight:600}}>PONTUAÇÃO DE SEGURANÇA</div>
+                  <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".65rem",letterSpacing:"2.5px",color:"#9A6D1F",marginBottom:10,fontWeight:600}}>PONTUAÇÃO DE SEGURANÇA</div>
                   <div style={{height:6,background:"rgba(255,255,255,.12)",borderRadius:3,overflow:"hidden"}}>
-                    <div style={{height:"100%",borderRadius:3,width:`${securityScore}%`,background:"linear-gradient(90deg,var(--gold),var(--gold-lt))",transition:"width .8s cubic-bezier(.22,1,.36,1)"}} />
+                    <div style={{height:"100%",borderRadius:3,width:`${securityScore}%`,background:"linear-gradient(90deg,#9A6D1F,#BF8E3A)",transition:"width .8s cubic-bezier(.22,1,.36,1)"}} />
                   </div>
                 </div>
-                <div style={{fontFamily:"var(--font-serif)",fontSize:"3.2rem",color:"var(--gold)",fontWeight:300,lineHeight:1}}>{securityScore}<span style={{fontSize:"1.4rem"}}>%</span></div>
+                <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"3.2rem",color:"#9A6D1F",fontWeight:300,lineHeight:1}}>{securityScore}<span style={{fontSize:"1.4rem"}}>%</span></div>
               </div>
 
               {/* Stats grid */}
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:14,marginBottom:28}}>
                 {[
-                  {label:"Serviços",  val:services.length,    icon:"✂️", color:"var(--gold)"},
-                  {label:"Produtos",  val:products.length,    icon:"📦", color:"var(--blue)"},
-                  {label:"Completo",  val:`${progress.pct}%`, icon:"📊", color:"var(--green)"},
-                  {label:"Status",    val:"Em análise",       icon:"⏳", color:"var(--warn)"},
+                  {label:"Serviços",  val:services.length,    icon:"✂️", color:"#9A6D1F"},
+                  {label:"Produtos",  val:products.length,    icon:"📦", color:"#1A5F96"},
+                  {label:"Completo",  val:`${progress.pct}%`, icon:"📊", color:"#1E6B22"},
+                  {label:"Status",    val:"Em análise",       icon:"⏳", color:"#6B4C08"},
                 ].map((s,i)=>(
-                  <div key={s.label} className="hov fade-up" style={{background:"#fff",borderRadius:14,padding:"20px",border:"1px solid var(--stone)",borderLeft:`4px solid ${s.color}`,boxShadow:"var(--shadow-xs)",animationDelay:`${i*.07}s`}}>
+                  <div key={s.label} className="hov fade-up" style={{background:"#fff",borderRadius:14,padding:"20px",border:"1px solid #DDD5CA",borderLeft:`4px solid ${s.color}`,boxShadow:"0 1px 4px rgba(0,0,0,0.08)",animationDelay:`${i*.07}s`}}>
                     <div style={{fontSize:"1.5rem",marginBottom:8}}>{s.icon}</div>
-                    <div style={{fontFamily:"var(--font-serif)",fontSize:"var(--t-xl)",fontWeight:300,color:"var(--ink)"}}>{s.val}</div>
-                    <div style={{fontFamily:"var(--font-sans)",fontSize:".72rem",color:"var(--muted)",marginTop:3,fontWeight:500}}>{s.label}</div>
+                    <div style={{fontFamily:"'Cormorant Garamond', Georgia, serif",fontSize:"1.75rem",fontWeight:300,color:"#0E0C09"}}>{s.val}</div>
+                    <div style={{fontFamily:"'DM Sans', system-ui, sans-serif",fontSize:".72rem",color:"#5A5044",marginTop:3,fontWeight:500}}>{s.label}</div>
                   </div>
                 ))}
               </div>
